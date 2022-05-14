@@ -1,0 +1,62 @@
+img {
+  height: 200px;
+}
+
+.upperHalf{
+    display:flex;
+    margin-bottom: 20px;
+
+    .buttons{
+        display:flex;
+        width: 70%;
+        justify-content: center;
+        align-items:center;
+
+        .button{
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+    }
+}
+
+
+
+.Remaining {
+  font-weight: 600;
+  font-size: large;
+
+  .Calories {
+    font-size: 35px;
+    color: rgb(136, 173, 136);
+  }
+}
+
+hr {
+  height: 0;
+  border: 0.5px solid rgb(230, 227, 227);
+}
+
+.count {
+  padding-top: 20px;
+  font-size: 25px;
+  display: flex;
+
+  .countItem {
+    
+    .span{
+        display: flex;
+    }
+
+    .vl {
+        display: flex;
+        border-left: 2px solid rgb(230, 227, 227);
+        height: 100px;
+      }
+  }
+
+  .vl {
+    border-left: 2px solid rgb(230, 227, 227);
+    height: 100px;
+    background-color: aqua;
+  }
+}
