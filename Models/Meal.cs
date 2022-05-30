@@ -2,14 +2,14 @@
 {
     public enum Type
     {
-        breakfast=0,
-        lunch=1,
-        dinner=2,
-        snacks=3
+        breakfast = 0,
+        lunch = 1,
+        dinner = 2,
+        snacks = 3
     }
     public class Meal
     {
-        
+
         public int Id { get; set; }
         public Type Types { get; set; }
         public int Calories { get; set; }

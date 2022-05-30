@@ -1,20 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MyFitnessApp.Models
 {
     public enum UserActivity
     {
-        VeryActive=0,
-        Active=1,
-        NotSoActive=2,
-        Sedentary=3,
+        VeryActive = 0,
+        Active = 1,
+        NotSoActive = 2,
+        Sedentary = 3,
     }
     public enum Goal
     {
-        Maintain=0,
-        Gain=1,
-        Cut=2
+        Maintain = 0,
+        Gain = 1,
+        Cut = 2
     }
     public class UserGoal
     {
