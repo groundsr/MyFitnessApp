@@ -19,7 +19,7 @@ namespace MyFitnessApp.Models
     public class UserGoal
     {
         public int Id { get; set; }
-        public IEnumerable<User> Users { get; set; }
+        public virtual IEnumerable<User> Users { get; set; }
         public Goal Goal { get; set; }
         public int GoalWeight { get; set; }
         public float GoalPerWeek { get; set; }

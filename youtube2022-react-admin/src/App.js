@@ -9,6 +9,7 @@ import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import FoodPage from "./pages/foodpage/FoodPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route path="home">
               <Route index element={<Dashboard />} />
+            </Route>
+            <Route path="food">
+              <Route index element={<FoodPage />} />
             </Route>
           </Route>
         </Routes>

@@ -7,48 +7,31 @@ import { useState } from "react";
 import Pie from "../pie/Pie";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import Progress from "react-circle-progress-bar";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import ButtonBase from "@mui/material/ButtonBase";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const DashboardCard = () => {
-  const [random, setRandom] = useState({
-    percentage: 0,
-    colour: "hsl(0, 0%, 0%)",
-  });
+  const [user, setUser] = useState({});
+  const [userGoal, setUserGoal] = useState({});
+  const [userPlan, setUserPlan] = useState({});
+  const url = "https://localhost:44325/users/get";
+  const url2 = "https://localhost:44325/usergoals/get";
+  const url3 = "https://localhost:44325/userplans/get";
 
-  const generateRandomValues = () => {
-    const rand = (n) => Math.random() * n;
-    setRandom({
-      percentage: rand(100),
-      colour: `hsl(${rand(360)}, ${rand(50) + 50}%, ${rand(30) + 20}%)`,
-    });
+  const getUserData = () => {
+    axios
+      .get(`${url}`)
+      .then((response) => {
+        const data = response.data[0];
+        setUser(data);
+        console.log(data);
+        setUserGoal(data.userGoal);
+        setUserPlan(data.userGoal.userPlan);
+      })
+      .catch((error) => console.error(`Error: ${error}`));
   };
 
-  const url = 'https://localhost:44325/weatherforecast';
-
-  const getData = () => {
-    axios.get(`${url}`)
-    .then((response) =>{
-      const data = response.data[0].temperatureC;
-      console.log(data);
-    })
-    .catch(error => console.error(`Error: ${error}`));
-  }
-
   React.useEffect(() => {
-    getData();
+    getUserData();
   }, []);
-  
 
   return (
     <Paper
@@ -70,7 +53,7 @@ const DashboardCard = () => {
           <div className="upperHalf">
             <div className="Remaining">
               Calories remaining:
-              <div className="Calories">2500</div>
+              <div className="Calories">{userPlan.totalCalories}</div>
             </div>
             <div className="buttons">
               <div className="button">
@@ -86,13 +69,13 @@ const DashboardCard = () => {
             </div>
           </div>
           <hr></hr>
-          <div class="lowerHalf">
+          <div className="lowerHalf">
             <Grid container className="count" spacing={2}>
               <Grid item className="countItem" xs={2}>
                 2710
                 <span className="span">Goal</span>
               </Grid>
-              <span class="vl"></span>
+              <span className="vl"></span>
               <Grid item xs={2}>
                 210 <div>Food</div>
               </Grid>
@@ -100,7 +83,7 @@ const DashboardCard = () => {
                 -
               </Grid>
               <Grid item xs={2}>
-                 <div>Exercise</div>
+                <div>Exercise</div>
               </Grid>
               <Grid item xs={1}>
                 =

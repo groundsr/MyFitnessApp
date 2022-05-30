@@ -30,5 +30,6 @@ namespace MyFitnessApp.Data
             modelBuilder.Entity<Exercise>().ToTable("Exercise");
             modelBuilder.Entity<Ingredient>().ToTable("Ingredient");
         }
+
     }
 }

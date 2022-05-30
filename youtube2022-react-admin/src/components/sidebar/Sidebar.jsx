@@ -34,6 +34,12 @@ const Sidebar = () => {
               <span>Home</span>
             </li>
           </Link>
+          <Link to="/food" style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardIcon className="icon" />
+              <span>Food</span>
+            </li>
+          </Link>
           <p className="title">LISTS</p>
           <Link to="/users" style={{ textDecoration: "none" }}>
             <li>

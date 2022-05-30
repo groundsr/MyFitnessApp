@@ -1,18 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyFitnessApp.BLL;
+using MyFitnessApp.DAL;
+using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyFitnessApp
 {
@@ -31,7 +27,18 @@ namespace MyFitnessApp
 
             services.AddControllers();
             services.AddDbContext<FitnessContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseLazyLoadingProxies()
+            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUserRepository, EFUserRepository>();
+            services.AddScoped<UserService>();
+            services.AddScoped<IUserPlanRepository, EFUserPlanRepository>();
+            services.AddScoped<UserPlanService>();
+            services.AddScoped<IUserGoalRepository, EFUserGoalRepository>();
+            services.AddScoped<UserGoalService>();
+
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             services.AddCors(options => options.AddDefaultPolicy(
                 builder => builder.AllowAnyOrigin()));

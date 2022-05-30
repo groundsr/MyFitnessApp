@@ -7,7 +7,7 @@ namespace MyFitnessApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
-        public IEnumerable<Ingredient> Ingredients { get; set; }
+        public virtual IEnumerable<Ingredient> Ingredients { get; set; }
 
     }
 }
