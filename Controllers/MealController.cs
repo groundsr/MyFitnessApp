@@ -8,53 +8,46 @@ namespace MyFitnessApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DiaryController : ControllerBase
+    public class MealController : ControllerBase
     {
-        public DiaryService _diaryService;
+        public MealService _mealService;
 
-        public DiaryController(DiaryService diaryService)
+        public MealController(MealService mealService)
         {
-            _diaryService = diaryService;
+            _mealService = mealService;
         }
 
         [HttpGet]
         [Route("get")]
-        public IEnumerable<Diary> GetDiaries()
+        public IEnumerable<Meal> GetMeals()
         {
-            return _diaryService.GetAll();
-        }
-
-        [HttpGet]
-        [Route("get/{userid}")]
-        public Diary GetDiaryForUser(int userid)
-        {
-            return _diaryService.GetDiaryForUser(userid);
+            return _mealService.GetAll();
         }
 
         [HttpGet]
         [Route("get/{id}")]
-        public Diary GetDiary(int id)
+        public Meal GetMeal(int id)
         {
-            var diary = _diaryService.Get(id);
-            return diary;
+            var meal = _mealService.Get(id);
+            return meal;
         }
 
         [HttpPost]
         [Route("create")]
-        public IActionResult Create(Diary diary)
+        public IActionResult Create(Meal meal)
         {
             try
             {
-                if (diary is null)
+                if (meal is null)
                 {
-                    return BadRequest("Diary is null");
+                    return BadRequest("Meal is null");
                 }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid object");
                 }
-                _diaryService.Create(diary);
-                return Ok("Diary has been created");
+                _mealService.Create(meal);
+                return Ok("Meal has been created");
             }
             catch (Exception ex)
             {
@@ -64,28 +57,28 @@ namespace MyFitnessApp.Controllers
 
         [HttpPut]
         [Route("update")]
-        public IActionResult Update(Diary diary)
+        public IActionResult Update(Meal meal)
         {
             try
             {
-                if (diary is null)
+                if (meal is null)
                 {
-                    return BadRequest("Diary is null");
+                    return BadRequest("Meal is null");
                 }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid object");
                 }
 
-                var diaryToUpdate = _diaryService.Get(diary.Id);
+                var mealToUpdate = _mealService.Get(meal.Id);
 
-                if (diaryToUpdate is null)
+                if (mealToUpdate is null)
                 {
                     return NotFound();
                 }
 
-                _diaryService.Update(diary);
-                return Ok("Diary has been updated succesfully");
+                _mealService.Update(meal);
+                return Ok("Meal has been updated succesfully");
             }
             catch (Exception ex)
             {
@@ -95,17 +88,17 @@ namespace MyFitnessApp.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public IActionResult Delete(Diary diary)
+        public IActionResult Delete(Meal meal)
         {
             try
             {
-                var diaryToDelete = _diaryService.Get(diary.Id);
-                if (diaryToDelete == null)
+                var mealToDelete = _mealService.Get(meal.Id);
+                if (mealToDelete == null)
                 {
                     return NotFound();
                 }
-                _diaryService.Delete(diary.Id);
-                return Ok("Diary has been deleted succesfully");
+                _mealService.Delete(meal.Id);
+                return Ok("Meal has been deleted succesfully");
             }
             catch (Exception ex)
             {
