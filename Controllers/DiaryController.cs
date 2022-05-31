@@ -8,46 +8,46 @@ namespace MyFitnessApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsersController : ControllerBase
+    public class DiaryController : ControllerBase
     {
-        public UserService _userService;
+        public DiaryService _diaryService;
 
-        public UsersController(UserService userService)
+        public DiaryController(DiaryService diaryService)
         {
-            _userService = userService;
+            _diaryService = diaryService;
         }
 
         [HttpGet]
         [Route("get")]
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<Diary> GetDiaries()
         {
-            return _userService.GetAll();
+            return _diaryService.GetAll();
         }
 
         [HttpGet]
         [Route("get/{id}")]
-        public User GetUser(int id)
+        public Diary GetDiary(int id)
         {
-            var user = _userService.Get(id);
-            return user;
+            var diary = _diaryService.Get(id);
+            return diary;
         }
 
         [HttpPost]
         [Route("create")]
-        public IActionResult Create(User user)
+        public IActionResult Create(Diary diary)
         {
             try
             {
-                if (user is null)
+                if (diary is null)
                 {
-                    return BadRequest("User is null");
+                    return BadRequest("Diary is null");
                 }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid object");
                 }
-                _userService.Create(user);
-                return Ok("User has been created");
+                _diaryService.Create(diary);
+                return Ok("Diary has been created");
             }
             catch (Exception ex)
             {
@@ -57,28 +57,28 @@ namespace MyFitnessApp.Controllers
 
         [HttpPut]
         [Route("update")]
-        public IActionResult Update(User user)
+        public IActionResult Update(Diary diary)
         {
             try
             {
-                if (user is null)
+                if (diary is null)
                 {
-                    return BadRequest("User is null");
+                    return BadRequest("Diary is null");
                 }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Invalid object");
                 }
 
-                var userToUpdate = _userService.Get(user.Id);
+                var diaryToUpdate = _diaryService.Get(diary.Id);
 
-                if (userToUpdate is null)
+                if (diaryToUpdate is null)
                 {
                     return NotFound();
                 }
 
-                _userService.Update(user);
-                return Ok("User has been updated succesfully");
+                _diaryService.Update(diary);
+                return Ok("Diary has been updated succesfully");
             }
             catch (Exception ex)
             {
@@ -88,17 +88,17 @@ namespace MyFitnessApp.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public IActionResult Delete(User user)
+        public IActionResult Delete(Diary diary)
         {
             try
             {
-                var userToDelete = _userService.Get(user.Id);
-                if (userToDelete == null)
+                var diaryToDelete = _diaryService.Get(diary.Id);
+                if (diaryToDelete == null)
                 {
                     return NotFound();
                 }
-                _userService.Delete(user.Id);
-                return Ok("User has been deleted succesfully");
+                _diaryService.Delete(diary.Id);
+                return Ok("Diary has been deleted succesfully");
             }
             catch (Exception ex)
             {
