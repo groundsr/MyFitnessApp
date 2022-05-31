@@ -5,14 +5,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { TextField } from "@material-ui/core";
 import { useState } from "react";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,11 +25,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
@@ -52,54 +52,73 @@ const Food = () => {
 
   return (
     <>
-      <div>
-        Your food Diary for:
-
-        <span>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DesktopDatePicker
-              label="Today"
-              value={value}
-              minDate={new Date("2017-01-01")}
-              onChange={(newValue) => {
-                setValue(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
-        </span>
+      <div className="tableContainer">
+        <div className="foodTitle">
+          Your food Diary for :
+          <span className="date">
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DesktopDatePicker
+                label="Today"
+                value={value}
+                minDate={new Date("2017-01-01")}
+                onChange={(newValue) => {
+                  setValue(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </span>
+        </div>
+        {meals.map((meal) => (
+          <TableContainer
+            className="topMeal"
+            sx={{ maxWidth: 1500 }}
+            component={Paper}
+          >
+            <Table
+              sx={{ minWidth: 600 }}
+              size="small"
+              aria-label="customized table"
+            >
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell className="mealTitle">
+                    {meal}{" "}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">Calories</StyledTableCell>
+                  <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
+                  <StyledTableCell align="right">
+                    Carbs&nbsp;(g)
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    Protein&nbsp;(g)
+                  </StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <StyledTableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <StyledTableCell component="th" scope="row">
+                      {row.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.calories}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
+                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.protein}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ))}
       </div>
-      {meals.map((meal) => (
-        <TableContainer className="topMeal" component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell className="mealTitle">{meal} </StyledTableCell>
-              <StyledTableCell align="right">Calories</StyledTableCell>
-              <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow 
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <StyledTableCell component="th" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
-              </StyledTableRow >
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      ))}
     </>
   );
 };

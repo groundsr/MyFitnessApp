@@ -1,4 +1,18 @@
-.topMeal {
-    padding: 30px;
-}
+.tableContainer {
+  padding: 20px;
+  .topMeal {
+      margin-top:20px;
+  }
+  .foodTitle
+  {
+    font-size: 22px;
+    color: gray;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
 
+  .date{
+      margin-left: 20px;
+  }
+}
