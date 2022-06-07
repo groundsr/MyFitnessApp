@@ -1,0 +1,25 @@
+.container {
+  padding: 30px;
+  .foodTitle {
+    font-size: 22px;
+    font-weight: 400;
+    color: grey;
+    margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+  }
+
+  .line {
+    height: 0;
+    border: 0.5px solid rgb(230, 227, 227);
+  }
+  .SearchLabel{
+      font-size: 18px;
+      font-weight: 400;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+  }
+  
+
+}

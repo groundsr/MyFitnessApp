@@ -1,18 +1,35 @@
 .tableContainer {
-  padding: 20px;
+  padding: 30px;
   .topMeal {
-      margin-top:20px;
+    margin-top: 20px;
   }
-  .foodTitle
-  {
+  .foodTitle {
     font-size: 22px;
-    color: gray;
+    font-weight: 400;
+    color: grey;
     margin-bottom: 20px;
-    display: flex;
     align-items: center;
-  }
+    display: flex;
 
-  .date{
+    .date {
       margin-left: 20px;
+      display: flex;
+      margin-right: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .btn {
+        text-decoration: none;
+        margin-left: 960px;
+        color: rgb(86, 74, 74);
+        font-size: 19px;
+        font-weight: 400;
+        border: 1px solid rgb(86, 74, 74);
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
   }
 }

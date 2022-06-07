@@ -10,6 +10,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import FoodPage from "./pages/foodpage/FoodPage";
+import AddFoodPage from "./pages/foodpage/addfoodpage/AddFoodPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -42,6 +43,7 @@ function App() {
             </Route>
             <Route path="food">
               <Route index element={<FoodPage />} />
+              <Route path=":add" element={<AddFoodPage/>} />
             </Route>
           </Route>
         </Routes>

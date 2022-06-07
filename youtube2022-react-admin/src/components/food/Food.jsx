@@ -13,6 +13,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,6 +42,7 @@ const Food = () => {
   const createData = (name, calories, fat, carbs, protein) => {
     return { name, calories, fat, carbs, protein };
   };
+
   const rows = [
     createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
     createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
@@ -55,7 +58,7 @@ const Food = () => {
       <div className="tableContainer">
         <div className="foodTitle">
           Your food Diary for :
-          <span className="date">
+          <div className="date">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 label="Today"
@@ -67,7 +70,13 @@ const Food = () => {
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
-          </span>
+            <Link to="/food/add" className="btn">
+              Add food
+            </Link>
+          </div>
+          {/* <span>
+            <Button variant="outlined">Outlined</Button>
+          </span> */}
         </div>
         {meals.map((meal) => (
           <TableContainer
