@@ -29,6 +29,10 @@ namespace MyFitnessApp.Data
             modelBuilder.Entity<Recipe>().ToTable("Recipe");
             modelBuilder.Entity<Exercise>().ToTable("Exercise");
             modelBuilder.Entity<Ingredient>().ToTable("Ingredient");
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
         }
 
     }
