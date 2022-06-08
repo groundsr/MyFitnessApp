@@ -1,6 +1,7 @@
 ﻿using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Data;
 using MyFitnessApp.Models;
+using System.Linq;
 
 namespace MyFitnessApp.DAL
 {
@@ -11,6 +12,11 @@ namespace MyFitnessApp.DAL
         public EFUserRepository(FitnessContext context) : base(context)
         {
             _context = context;
+        }
+
+        public User GetByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(x => x.Email == email);
         }
     }
 }

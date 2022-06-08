@@ -32,6 +32,7 @@ namespace MyFitnessApp
 
             services.AddScoped<IUserRepository, EFUserRepository>();
             services.AddScoped<UserService>();
+            services.AddScoped<EFUserRepository>();
             services.AddScoped<IUserPlanRepository, EFUserPlanRepository>();
             services.AddScoped<UserPlanService>();
             services.AddScoped<IUserGoalRepository, EFUserGoalRepository>();

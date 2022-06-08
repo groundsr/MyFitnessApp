@@ -32,7 +32,7 @@ namespace MyFitnessApp.DAL
         {
             return dbSet.Find(id);
         }
-
+        
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query = dbSet;

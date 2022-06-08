@@ -1,4 +1,5 @@
-﻿using MyFitnessApp.DAL.Abstractions;
+﻿using MyFitnessApp.DAL;
+using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Models;
 using System.Collections.Generic;
 
@@ -8,10 +9,12 @@ namespace MyFitnessApp.BLL
     public class UserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly EFUserRepository _efUserRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, EFUserRepository eFUserRepository)
         {
             _userRepository = userRepository;
+            _efUserRepository = eFUserRepository;
         }
         public IEnumerable<User> GetAll()
         {
@@ -20,6 +23,10 @@ namespace MyFitnessApp.BLL
         public User Get(int id)
         {
             return _userRepository.Get(id);
+        }
+        public User GetByEmail(string email)
+        {
+            return _efUserRepository.GetByEmail(email);
         }
         public void Create(User user)
         {
