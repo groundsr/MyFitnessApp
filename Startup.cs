@@ -9,6 +9,7 @@ using MyFitnessApp.BLL;
 using MyFitnessApp.DAL;
 using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Data;
+using MyFitnessApp.Helpers;
 
 namespace MyFitnessApp
 {
@@ -41,6 +42,7 @@ namespace MyFitnessApp
             services.AddScoped<DiaryService>();
             services.AddScoped<IMealRepository, EFMealRepository>();
             services.AddScoped<MealService>();
+            services.AddScoped<JwtService>();
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -67,7 +69,8 @@ namespace MyFitnessApp
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors(options => options.AllowAnyHeader().WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080" })
+            .AllowAnyMethod().AllowCredentials());
 
             app.UseAuthorization();
 
