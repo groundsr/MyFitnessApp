@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import FoodPage from "./pages/foodpage/FoodPage";
 import AddFoodPage from "./pages/foodpage/addfoodpage/AddFoodPage";
+import RegisterPage from "./pages/register/RegisterPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -22,6 +23,7 @@ function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
             <Route path="users">
               <Route index element={<List />} />
               <Route path=":userId" element={<Single />} />

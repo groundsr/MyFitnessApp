@@ -88,6 +88,12 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
+          <Link to="/register" style={{ textDecoration: "none" }}>
+            <li>
+              <PersonOutlineIcon className="icon" />
+              <span>Register</span>
+            </li>
+          </Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />

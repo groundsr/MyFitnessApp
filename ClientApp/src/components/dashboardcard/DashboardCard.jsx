@@ -47,7 +47,7 @@ const DashboardCard = () => {
     >
       <Grid container spacing={2}>
         <Grid item xs>
-          <img src="https://media.istockphoto.com/photos/cheers-picture-id504402647?k=20&m=504402647&s=612x612&w=0&h=Vw_QpmzOYi1Z3dBznff-S66btru0G9VOXcJI5TPRNrI=" />
+          <img src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png" />
         </Grid>
         <Grid item xs={7}>
           <div className="upperHalf">
