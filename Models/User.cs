@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace MyFitnessApp.Models
 {
@@ -7,6 +8,7 @@ namespace MyFitnessApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
         public DateTime BirthDay { get; set; }
         public string Sex { get; set; }
