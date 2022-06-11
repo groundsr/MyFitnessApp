@@ -11,6 +11,29 @@ import { useContext } from "react";
 
 const Navbar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
+  let menu;
+
+  if(props.name){
+    menu = (
+      <>
+      <div className="item">
+            <NotificationsNoneOutlinedIcon className="icon" />
+            <div className="counter">1</div>
+          </div>
+          <div className="item">
+            <ChatBubbleOutlineOutlinedIcon className="icon" />
+            <div className="counter">2</div>
+          </div>
+          <div className="item">
+            <img
+              src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              alt=""
+              className="avatar"
+            />
+          </div>
+      </>
+    );
+  }
 
   return (
     <div className="navbar">
@@ -30,28 +53,8 @@ const Navbar = (props) => {
               onClick={() => dispatch({ type: "TOGGLE" })}
             />
           </div>
-          <div className="item">
-            <FullscreenExitOutlinedIcon className="icon" />
-          </div>
-          <div className="item">
-            <NotificationsNoneOutlinedIcon className="icon" />
-            <div className="counter">1</div>
-          </div>
-          <div className="item">
-            <ChatBubbleOutlineOutlinedIcon className="icon" />
-            <div className="counter">2</div>
-          </div>
-          <div className="item">
-            <ListOutlinedIcon className="icon" />
-          </div>
-          <div className="item">
-            <img
-              src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-              alt=""
-              className="avatar"
-            />
-          </div>
-          <div>{props.name ? 'Welcome, ' +props.name : 'You are logged out'}</div>
+          {menu}
+          <div className="navbarText">{props.name ? 'Welcome, ' +props.name : 'You are logged out'}</div>
         </div>
       </div>
     </div>

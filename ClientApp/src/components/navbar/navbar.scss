@@ -6,6 +6,13 @@
   font-size: 14px;
   color: #555;
 
+  .navbarText{
+    display: flex;
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 20px;
+  }
+
   .wrapper {
     width: 100%;
     padding: 20px;
