@@ -1,4 +1,5 @@
 import "./navbar.scss";
+import { useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -7,9 +8,10 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import axios from "axios";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
 
   return (
@@ -51,6 +53,7 @@ const Navbar = () => {
               className="avatar"
             />
           </div>
+          <div>{props.name ? 'Welcome, ' +props.name : 'You are logged out'}</div>
         </div>
       </div>
     </div>

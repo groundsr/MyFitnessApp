@@ -52,13 +52,12 @@ namespace MyFitnessApp.Controllers
 
             Response.Cookies.Append("jwt", jwt, new CookieOptions
             {
-                HttpOnly = true
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
             });
 
-            return Ok(new
-            {
-                message = "success"
-            });
+            return Ok(user);
         }
 
         [HttpGet("user")]
@@ -70,7 +69,7 @@ namespace MyFitnessApp.Controllers
                 var token = _jwtService.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var user = _userService.Get(userId);
-                return Ok();
+                return Ok(user);
             }
             catch (Exception e)
             {
@@ -81,7 +80,12 @@ namespace MyFitnessApp.Controllers
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("jwt");
+            Response.Cookies.Delete("jwt", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+            });
             return Ok(new
             {
                 message = "success"

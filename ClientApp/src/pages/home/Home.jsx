@@ -6,12 +6,12 @@ import Featured from "../../components/featured/Featured";
 import Chart from "../../components/chart/Chart";
 import Table from "../../components/table/Table";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div className="home">
-      <Sidebar />
+      <Sidebar name={props.name} />
       <div className="homeContainer">
-        <Navbar />
+        <Navbar name={props.name}/>
         <div className="widgets">
           <Widget type="user" />
           <Widget type="order" />

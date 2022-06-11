@@ -1,4 +1,6 @@
 import "./sidebar.scss";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -15,13 +17,60 @@ import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
+  let menu;
+  const headers = {
+    'Content-Type': 'application/json',
+    'credentials' : 'include',
+  }
+
+  const logout = async () => {
+    await fetch('https://localhost:44325/api/logout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      credentials: 'include',
+    });
+
+    props.setName('');
+  }
+ 
+
+
+  if (!props.name) {
+    menu = (
+      <>
+        <Link to="/register" style={{ textDecoration: "none" }}>
+          <li>
+            <PersonOutlineIcon className="icon" />
+            <span>Register</span>
+          </li>
+        </Link>
+        <Link to="/login" style={{ textDecoration: "none" }}>
+          <li>
+            <PersonOutlineIcon className="icon" />
+            <span>Login</span>
+          </li>
+        </Link>
+      </>
+    );
+  } else {
+    menu = (
+      <Link to="/login" style={{ textDecoration: "none" }} onClick={logout}>
+        <li>
+          <ExitToAppIcon className="icon" />
+          <span>Logout</span>
+        </li>
+      </Link>
+    );
+  }
+
   return (
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
           <span className="logo">MyFitnessPal</span>
+          <div>{props.name}</div>
         </Link>
       </div>
       <hr />
@@ -88,22 +137,7 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
-          <Link to="/register" style={{ textDecoration: "none" }}>
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Register</span>
-            </li>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Login</span>
-            </li>
-          </Link>
-          <li>
-            <ExitToAppIcon className="icon" />
-            <span>Logout</span>
-          </li>
+          {menu}
         </ul>
       </div>
       <div className="bottom">

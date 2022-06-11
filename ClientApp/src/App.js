@@ -1,5 +1,6 @@
 import Home from "./pages/home/Home";
 import LoginPage from "./pages/login/LoginPage";
+import {useState,useEffect} from "react";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
@@ -15,17 +16,32 @@ import RegisterPage from "./pages/register/RegisterPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
+  const [name,setName] = useState('');
+
+  useEffect(() => {
+    (
+      async () => {
+        const response = await fetch('https://localhost:44325/api/user', {
+          headers: {'Content-Type': 'application/json'},
+          credentials: 'include',
+        });
+
+        const content = await response.json();
+        setName(content.name);
+      }
+    )();
+  });
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="login" element={<LoginPage />} />
+            <Route index element={<Home name={name} setName={setName}/>} />
+            <Route path="login" element={<LoginPage name={name} setName={setName}/>} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="users">
-              <Route index element={<List />} />
+              <Route index element={<List name={name}/>} />
               <Route path=":userId" element={<Single />} />
               <Route
                 path="new"

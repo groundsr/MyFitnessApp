@@ -46,9 +46,7 @@ namespace MyFitnessApp
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-
-            services.AddCors(options => options.AddDefaultPolicy(
-                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyFitnessApp", Version = "v1" });
@@ -69,7 +67,7 @@ namespace MyFitnessApp
 
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyHeader().WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080" })
+            app.UseCors(options => options.AllowAnyHeader().WithOrigins(new[] { "http://localhost:3000", "https://localhost:3000", "http://localhost:8080" })
             .AllowAnyMethod().AllowCredentials());
 
             app.UseAuthorization();

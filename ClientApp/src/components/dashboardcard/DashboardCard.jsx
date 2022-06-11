@@ -34,71 +34,71 @@ const DashboardCard = () => {
   }, []);
 
   return (
-    <Paper
-      sx={{
-        p: 2,
-        margin: "auto",
-        marginTop: 4,
-        maxWidth: 1200,
-        flexGrow: 1,
-        backgroundColor: (theme) =>
-          theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-      }}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs>
-          <img src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png" />
-        </Grid>
-        <Grid item xs={7}>
-          <div className="upperHalf">
-            <div className="Remaining">
-              Calories remaining:
-              <div className="Calories">{userPlan.totalCalories}</div>
-            </div>
-            <div className="buttons">
-              <div className="button">
-                <Button color="success" variant="outlined">
-                  Add food
-                </Button>
+      <Paper
+        sx={{
+          p: 2,
+          margin: "auto",
+          marginTop: 4,
+          maxWidth: 1200,
+          flexGrow: 1,
+          backgroundColor: (theme) =>
+            theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs>
+            <img src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png" />
+          </Grid>
+          <Grid item xs={7}>
+            <div className="upperHalf">
+              <div className="Remaining">
+                Calories remaining:
+                <div className="Calories">{userPlan.totalCalories}</div>
               </div>
-              <div className="button">
-                <Button variant="outlined" color="success">
-                  Add exercise
-                </Button>
+              <div className="buttons">
+                <div className="button">
+                  <Button color="success" variant="outlined">
+                    Add food
+                  </Button>
+                </div>
+                <div className="button">
+                  <Button variant="outlined" color="success">
+                    Add exercise
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-          <hr></hr>
-          <div className="lowerHalf">
-            <Grid container className="count" spacing={2}>
-              <Grid item className="countItem" xs={2}>
-                2710
-                <span className="span">Goal</span>
+            <hr></hr>
+            <div className="lowerHalf">
+              <Grid container className="count" spacing={2}>
+                <Grid item className="countItem" xs={2}>
+                  2710
+                  <span className="span">Goal</span>
+                </Grid>
+                <span className="vl"></span>
+                <Grid item xs={2}>
+                  210 <div>Food</div>
+                </Grid>
+                <Grid item xs={1}>
+                  -
+                </Grid>
+                <Grid item xs={2}>
+                  <div>Exercise</div>
+                </Grid>
+                <Grid item xs={1}>
+                  =
+                </Grid>
+                <Grid item xs={2}>
+                  210 <div>Net</div>
+                </Grid>
               </Grid>
-              <span className="vl"></span>
-              <Grid item xs={2}>
-                210 <div>Food</div>
-              </Grid>
-              <Grid item xs={1}>
-                -
-              </Grid>
-              <Grid item xs={2}>
-                <div>Exercise</div>
-              </Grid>
-              <Grid item xs={1}>
-                =
-              </Grid>
-              <Grid item xs={2}>
-                210 <div>Net</div>
-              </Grid>
-            </Grid>
-          </div>
+            </div>
+          </Grid>
+          <Grid item xs>
+            <Pie percentage={85} colour="green" />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Pie percentage={85} colour="green" />
-        </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
   );
 };
 

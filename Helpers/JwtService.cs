@@ -7,7 +7,7 @@ namespace MyFitnessApp.Helpers
 {
     public class JwtService
     {
-        private string secureKey = "very secure key";
+        private string secureKey = "this is my custom Secret key for authentication";
         public string Generate(int id)
         {
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secureKey));
@@ -28,7 +28,8 @@ namespace MyFitnessApp.Helpers
             {
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuerSigningKey = true,
-                ValidateIssuer = false
+                ValidateIssuer = false,
+                ValidateAudience = false
             }, out SecurityToken validatedToken);
             return (JwtSecurityToken)validatedToken;
         }
