@@ -4,10 +4,10 @@ import App from "./App";
 import { DarkModeContextProvider } from "./context/darkModeContext";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <DarkModeContextProvider>
       <App />
     </DarkModeContextProvider>
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById("root")
 );

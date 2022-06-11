@@ -4,12 +4,12 @@ import Sidebar from '../../../components/sidebar/Sidebar';
 import Navbar from '../../../components/navbar/Navbar';
 import "./addfoodpage.scss"
 
-const AddFoodPage = () => {
+const AddFoodPage = (props) => {
   return (
     <div className="food">
-    <Sidebar />
+    <Sidebar name={props.name}/>
     <div className="foodContainer">
-      <Navbar />
+      <Navbar name={props.name}/>
       <AddFood/>
     </div>
   </div>

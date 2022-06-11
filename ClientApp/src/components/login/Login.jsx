@@ -55,7 +55,7 @@ const Login = (props) => {
     setRedirect(true);
     const content = await response.json();
 
-    props.setName(content.name);
+    {props.setName(content.name)};
     console.log(content);
   };
 

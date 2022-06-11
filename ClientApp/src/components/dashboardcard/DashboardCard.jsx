@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./dashboardcard.scss";
-import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
@@ -13,8 +12,6 @@ const DashboardCard = () => {
   const [userGoal, setUserGoal] = useState({});
   const [userPlan, setUserPlan] = useState({});
   const url = "https://localhost:44325/users/get";
-  const url2 = "https://localhost:44325/usergoals/get";
-  const url3 = "https://localhost:44325/userplans/get";
 
   const getUserData = () => {
     axios
@@ -47,7 +44,7 @@ const DashboardCard = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs>
-            <img src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png" />
+            <img src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png" alt=""/>
           </Grid>
           <Grid item xs={7}>
             <div className="upperHalf">

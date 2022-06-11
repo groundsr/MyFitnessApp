@@ -37,7 +37,6 @@ const Datatable = (props) => {
     <div className="datatable">
       <div className="datatableTitle">
         Add New User
-        <div>{props.name}</div>
         <Link to="/users/new" className="link">
           Add New
         </Link>

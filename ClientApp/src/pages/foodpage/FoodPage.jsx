@@ -1,16 +1,15 @@
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
-import DashboardCard from '../../components/dashboardcard/DashboardCard';
 import Food from '../../components/food/Food';
 import "./foodpage.scss";
 import React from 'react'
 
-const FoodPage = () => {
+const FoodPage = (props) => {
     return (
         <div className="food">
-          <Sidebar />
+          <Sidebar name={props.name}/>
           <div className="foodContainer">
-            <Navbar />
+            <Navbar name={props.name}/>
             <Food/>
           </div>
         </div>

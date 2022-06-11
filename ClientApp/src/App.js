@@ -27,6 +27,7 @@ function App() {
         });
 
         const content = await response.json();
+        console.log(content);
         setName(content.name);
       }
     )();
@@ -38,30 +39,30 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Home name={name} setName={setName}/>} />
-            <Route path="login" element={<LoginPage name={name} setName={setName}/>} />
-            <Route path="register" element={<RegisterPage />} />
+            <Route path="login" element={<LoginPage name={name}/>} />
+            <Route path="register" element={<RegisterPage name={name}/>} />
             <Route path="users">
               <Route index element={<List name={name}/>} />
-              <Route path=":userId" element={<Single />} />
+              <Route path=":userId" element={<Single name={name}/>} />
               <Route
                 path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
+                element={<New inputs={userInputs} name={name} title="Add New User" />}
               />
             </Route>
             <Route path="products">
-              <Route index element={<List />} />
-              <Route path=":productId" element={<Single />} />
+              <Route index element={<List name={name}/>} />
+              <Route path=":productId" element={<Single name={name}/>} />
               <Route
                 path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
+                element={<New inputs={productInputs} name={name} title="Add New Product" />}
               />
             </Route>
             <Route path="home">
-              <Route index element={<Dashboard />} />
+              <Route index element={<Dashboard name={name}/>} />
             </Route>
             <Route path="food">
-              <Route index element={<FoodPage />} />
-              <Route path=":add" element={<AddFoodPage/>} />
+              <Route index element={<FoodPage name={name}/>} />
+              <Route path=":add" element={<AddFoodPage name={name}/>} />
             </Route>
           </Route>
         </Routes>

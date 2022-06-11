@@ -1,6 +1,4 @@
 import "./sidebar.scss";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -20,10 +18,6 @@ import { useContext } from "react";
 const Sidebar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
   let menu;
-  const headers = {
-    'Content-Type': 'application/json',
-    'credentials' : 'include',
-  }
 
   const logout = async () => {
     await fetch('https://localhost:44325/api/logout', {
@@ -70,7 +64,6 @@ const Sidebar = (props) => {
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
           <span className="logo">MyFitnessPal</span>
-          <div>{props.name}</div>
         </Link>
       </div>
       <hr />
