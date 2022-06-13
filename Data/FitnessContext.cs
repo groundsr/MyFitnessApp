@@ -19,6 +19,10 @@ namespace MyFitnessApp.Data
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 
+        public DbSet<Breakfast> Breakfast { get; set; }
+        public DbSet<Lunch> Lunch { get; set; }
+        public DbSet<Dinner> Dinner { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
@@ -29,6 +33,9 @@ namespace MyFitnessApp.Data
             modelBuilder.Entity<Recipe>().ToTable("Recipe");
             modelBuilder.Entity<Exercise>().ToTable("Exercise");
             modelBuilder.Entity<Ingredient>().ToTable("Ingredient");
+            modelBuilder.Entity<Breakfast>().ToTable("Breakfast");
+            modelBuilder.Entity<Lunch>().ToTable("Lunch");
+            modelBuilder.Entity<Dinner>().ToTable("Dinner");
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();

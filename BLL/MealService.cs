@@ -32,7 +32,7 @@ namespace MyFitnessApp.BLL
             mealToUpdate.Protein = meal.Protein;
             mealToUpdate.Carbohydrates = meal.Carbohydrates;
             mealToUpdate.Calories = meal.Calories;
-            mealToUpdate.Types = meal.Types;
+            mealToUpdate.Name = meal.Name;
             _mealRepository.Update(mealToUpdate);
         }
         public void Delete(int id)

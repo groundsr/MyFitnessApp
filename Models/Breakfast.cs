@@ -1,0 +1,12 @@
+﻿using System.Collections.Generic;
+
+namespace MyFitnessApp.Models
+{
+    public class Breakfast
+    {
+        public int Id { get; set; }
+        public virtual ICollection<Meal> Meals { get; set; }
+        public int Calories { get; set; }
+
+    }
+}

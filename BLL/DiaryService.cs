@@ -23,6 +23,23 @@ namespace MyFitnessApp.BLL
         {
             return _diaryRepository.GetAll().FirstOrDefault(x => x.User.Id == userId);
         }
+
+        public void AddFoodToDiary(int userId, string MealType, Meal meal)
+        {
+            var diary = GetDiaryForUser(userId);
+            if(MealType == "Breakfast")
+            {
+                diary.Breakfast.Meals.Add(meal);
+            }
+            else if (MealType == "Lunch")
+            {
+                diary.Lunch.Meals.Add(meal);
+            }
+            else
+            {
+                diary.Dinner.Meals.Add(meal);
+            }
+        }
         public Diary Get(int id)
         {
             return _diaryRepository.Get(id);
@@ -35,7 +52,9 @@ namespace MyFitnessApp.BLL
         {
             var diaryToUpdate = _diaryRepository.Get(diary.Id);
             diaryToUpdate.User = diary.User;
-            diaryToUpdate.Meals = diary.Meals;
+            diaryToUpdate.Breakfast = diary.Breakfast;
+            diaryToUpdate.Lunch = diary.Lunch;
+            diaryToUpdate.Dinner = diary.Dinner;
             diaryToUpdate.TotalCalories = diary.TotalCalories;
             _diaryRepository.Update(diaryToUpdate);
         }
