@@ -14,6 +14,8 @@ const Table = ({ data }) => {
   }));
 
   
+
+  
   const columns = [
     {
       id: 1,

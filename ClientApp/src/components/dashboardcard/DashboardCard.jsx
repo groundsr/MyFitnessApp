@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import Pie from "../pie/Pie";
 import Button from "@mui/material/Button";
+import { Box } from "@mui/system";
 import axios from "axios";
 
 const DashboardCard = () => {
@@ -31,20 +32,36 @@ const DashboardCard = () => {
   }, []);
 
   return (
+    <>
+    <Box sx={{
+      p:2,
+      margin: "auto",
+      marginTop: 4,
+      maxWidth: 'lg',
+      flexGrow: 1,
+      backgroundColor: 'rgb(50, 167, 225)'
+    }}>
+      <div className='title'>
+        Your daily summary
+      </div>
+    </Box>
       <Paper
         sx={{
           p: 2,
           margin: "auto",
-          marginTop: 4,
-          maxWidth: 1200,
+          maxWidth: 'lg',
           flexGrow: 1,
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
         }}
       >
+        
         <Grid container spacing={2}>
           <Grid item xs>
-            <img src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png" alt=""/>
+            <img
+              src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png"
+              alt=""
+            />
           </Grid>
           <Grid item xs={7}>
             <div className="upperHalf">
@@ -54,14 +71,10 @@ const DashboardCard = () => {
               </div>
               <div className="buttons">
                 <div className="button">
-                  <Button color="success" variant="outlined">
-                    Add food
-                  </Button>
+                  <Button variant="outlined">Add food</Button>
                 </div>
                 <div className="button">
-                  <Button variant="outlined" color="success">
-                    Add exercise
-                  </Button>
+                  <Button variant="outlined">Add exercise</Button>
                 </div>
               </div>
             </div>
@@ -92,10 +105,11 @@ const DashboardCard = () => {
             </div>
           </Grid>
           <Grid item xs>
-            <Pie percentage={85} colour="green" />
+            <Pie percentage={85} colour="rgb(50, 167, 225)" />
           </Grid>
         </Grid>
       </Paper>
+    </>
   );
 };
 

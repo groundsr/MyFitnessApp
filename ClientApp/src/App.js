@@ -13,6 +13,10 @@ import { DarkModeContext } from "./context/darkModeContext";
 import FoodPage from "./pages/foodpage/FoodPage";
 import AddFoodPage from "./pages/foodpage/addfoodpage/AddFoodPage";
 import RegisterPage from "./pages/register/RegisterPage";
+import WelcomePage from "./pages/register/WelcomePage";
+import ActivityLevelPage from "./pages/register/ActivityLevelPage";
+import WeightGoalPage from "./pages/register/WeightGoalPage";
+import PersonalInfoPage from "./pages/register/PersonalInfoPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -39,7 +43,13 @@ function App() {
           <Route path="/">
             <Route index element={<Home name={name} setName={setName}/>} />
             <Route path="login" element={<LoginPage name={name}/>} />
-            <Route path="register" element={<RegisterPage name={name}/>} />
+            <Route path="account">
+              <Route index element={<WelcomePage/>}/>
+              <Route path="goals" element={<WeightGoalPage/>}/>
+              <Route path="activity-level" element={<ActivityLevelPage/>}/>
+              <Route path="personalinfo" element={<PersonalInfoPage/>}/>
+              <Route path="register" element={<RegisterPage name={name}/>}/>
+            </Route>
             <Route path="users">
               <Route index element={<List name={name}/>} />
               <Route path=":userId" element={<Single name={name}/>} />

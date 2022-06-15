@@ -34,7 +34,7 @@ const Sidebar = (props) => {
   if (!props.name) {
     menu = (
       <>
-        <Link to="/register" style={{ textDecoration: "none" }}>
+        <Link to="/account" style={{ textDecoration: "none" }}>
           <li>
             <PersonOutlineIcon className="icon" />
             <span>Register</span>
@@ -82,6 +82,12 @@ const Sidebar = (props) => {
               <span>Food</span>
             </li>
           </Link>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardIcon className="icon" />
+              <span>Exercises</span>
+            </li>
+          </Link>
           <p className="title">LISTS</p>
           <Link to="/users" style={{ textDecoration: "none" }}>
             <li>
@@ -92,10 +98,10 @@ const Sidebar = (props) => {
           <Link to="/products" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Products</span>
+              <span>Recipes</span>
             </li>
           </Link>
-          <li>
+          {/* <li>
             <CreditCardIcon className="icon" />
             <span>Orders</span>
           </li>
@@ -124,12 +130,14 @@ const Sidebar = (props) => {
           <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
-          </li>
+          </li> */}
           <p className="title">USER</p>
+          <Link to="/users/test" style={{ textDecoration: "none" }}>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
+          </Link>
           {menu}
         </ul>
       </div>

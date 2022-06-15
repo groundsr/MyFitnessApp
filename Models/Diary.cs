@@ -9,6 +9,7 @@ namespace MyFitnessApp.Models
         public virtual Breakfast Breakfast { get; set; }
         public virtual Lunch Lunch { get; set; }
         public virtual Dinner Dinner { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
         public int TotalCalories { get; set; }
 
     }

@@ -2,6 +2,16 @@ img {
   height: 200px;
 }
 
+.title{
+    width: 100%;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
 .upperHalf{
     display:flex;
     margin-bottom: 20px;
@@ -27,7 +37,7 @@ img {
 
   .Calories {
     font-size: 35px;
-    color: rgb(136, 173, 136);
+    color: rgb(50, 167, 225);
   }
 }
 
