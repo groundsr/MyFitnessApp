@@ -1,10 +1,10 @@
-import "./single.scss";
+import "./profile.scss"
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 import List from "../../components/table/Table";
 
-const Single = () => {
+const Profile = () => {
   return (
     <div className="single">
       <Sidebar />
@@ -44,16 +44,16 @@ const Single = () => {
             </div>
           </div>
           <div className="right">
-            <Chart aspect={3 / 1} title="User Progress ( Last 6 Months)" />
+            <Chart aspect={3 / 1} title="User Progress (Last 6 Months)" />
           </div>
         </div>
-        {/* <div className="bottom">
-        <h1 className="title">Last Transactions</h1>
+        <div className="bottom">
+        <h1 className="title">Nutrition (Last 7 days)</h1>
           <List/>
-        </div> */}
+        </div>
       </div>
     </div>
   );
 };
 
-export default Single;
+export default Profile;

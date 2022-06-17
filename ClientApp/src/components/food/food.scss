@@ -9,12 +9,13 @@
     color: grey;
     margin-bottom: 20px;
     align-items: center;
-    display: flex;
+      justify-content: center;
+    justify-content: space-between;
+      display: flex;
 
     .date {
       margin-left: 20px;
       display: flex;
-      margin-right: 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;

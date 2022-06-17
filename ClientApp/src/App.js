@@ -2,7 +2,7 @@ import Home from "./pages/home/Home";
 import LoginPage from "./pages/login/LoginPage";
 import {useState,useEffect} from "react";
 import List from "./pages/list/List";
-import Single from "./pages/single/Single";
+import Single from "./pages/profile/Profile";
 import New from "./pages/new/New";
 import Dashboard from "./pages/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -12,11 +12,14 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import FoodPage from "./pages/foodpage/FoodPage";
 import AddFoodPage from "./pages/foodpage/addfoodpage/AddFoodPage";
+import AddExercisePage from "./pages/exercise/addexercisepage/AddExercisePage";
+
 import RegisterPage from "./pages/register/RegisterPage";
 import WelcomePage from "./pages/register/WelcomePage";
 import ActivityLevelPage from "./pages/register/ActivityLevelPage";
 import WeightGoalPage from "./pages/register/WeightGoalPage";
 import PersonalInfoPage from "./pages/register/PersonalInfoPage";
+import ExercisePage from "./pages/exercise/ExercisePage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -72,6 +75,10 @@ function App() {
             <Route path="food">
               <Route index element={<FoodPage name={name}/>} />
               <Route path=":add" element={<AddFoodPage name={name}/>} />
+            </Route>
+            <Route path="exercise">
+              <Route index element={<ExercisePage name={name}/>} />
+              <Route path=":add" element={<AddExercisePage name={name}/>} />
             </Route>
           </Route>
         </Routes>

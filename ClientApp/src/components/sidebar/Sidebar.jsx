@@ -11,6 +11,10 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import LoginIcon from '@mui/icons-material/Login';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
@@ -42,7 +46,7 @@ const Sidebar = (props) => {
         </Link>
         <Link to="/login" style={{ textDecoration: "none" }}>
           <li>
-            <PersonOutlineIcon className="icon" />
+            <LoginIcon className="icon" />
             <span>Login</span>
           </li>
         </Link>
@@ -78,13 +82,13 @@ const Sidebar = (props) => {
           </Link>
           <Link to="/food" style={{ textDecoration: "none" }}>
             <li>
-              <DashboardIcon className="icon" />
+              <RestaurantIcon className="icon" />
               <span>Food</span>
             </li>
           </Link>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/exercise" style={{ textDecoration: "none" }}>
             <li>
-              <DashboardIcon className="icon" />
+              <FitnessCenterIcon className="icon" />
               <span>Exercises</span>
             </li>
           </Link>
@@ -97,7 +101,7 @@ const Sidebar = (props) => {
           </Link>
           <Link to="/products" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <MenuBookIcon className="icon" />
               <span>Recipes</span>
             </li>
           </Link>
