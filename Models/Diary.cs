@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MyFitnessApp.Models
 {
@@ -9,7 +10,9 @@ namespace MyFitnessApp.Models
         public virtual Breakfast Breakfast { get; set; }
         public virtual Lunch Lunch { get; set; }
         public virtual Dinner Dinner { get; set; }
-        public virtual ICollection<Exercise> Exercises { get; set; }
+#nullable enable
+        public virtual ICollection<Exercise>? Exercises { get; set; }
+        public DateTime CreationDate { get; set; }
         public int TotalCalories { get; set; }
 
     }

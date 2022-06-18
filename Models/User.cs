@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace MyFitnessApp.Models
@@ -15,6 +16,7 @@ namespace MyFitnessApp.Models
         public int Height { get; set; }
         public int Weight { get; set; }
         public virtual UserGoal UserGoal { get; set; }
+        public virtual ICollection<Diary> Diaries { get; set; }
 
 
     }

@@ -19,7 +19,7 @@ import { purple } from '@mui/material/colors';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: 'rgb(35, 7, 56)',
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -37,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Food = () => {
+const Exercise = () => {
   const [value, setValue] = useState(new Date());
 
   const createData = (name, minutes, caloriesBurned) => {
@@ -47,6 +47,7 @@ const Food = () => {
   const rows = [
     createData("Walking, 10.5 mins per km", 60, 480),
     createData("Running", 60, 900),
+    createData("Barbell rows", 60, 480),
   ];
 
   const exercises = ["Cardiovascular", "Strength"];
@@ -143,4 +144,4 @@ const Food = () => {
   );
 };
 
-export default Food;
+export default Exercise;

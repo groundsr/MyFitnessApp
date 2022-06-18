@@ -26,7 +26,6 @@ const AddFood = () => {
     fetchDetails();
   },[]);
 
-
   const search = (data) => {
     return data.filter(item => item.name.toLowerCase().includes(input));
   }

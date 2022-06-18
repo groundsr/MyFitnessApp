@@ -6,8 +6,54 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+import { Summarize } from "@mui/icons-material";
+import Chip from "@mui/material/Chip";
 
 const List = () => {
+  const [DiaryDetails, SetDiaryDetails] = useState([]);
+
+  const fetchDetails = async () => {
+    const data = axios
+      .get("https://localhost:44325/diary/get")
+      .then((response) => {
+        console.log(response.data[0].lunch.meals);
+        SetDiaryDetails(response.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+
+  // let dataRows = data.map((item) => ({
+  //   id: item.id,
+  //   name: item.name,
+  //   protein: item.protein,
+  //   calories: item.calories,
+  //   fat: item.fat,
+  //   carbs: item.carbohydrates,
+  //   quantity: 0,
+  // }));
+  const calculateMacro = (meal) => {
+    DiaryDetails.map((diary) => {
+      meal = diary.lunch.meals.reduce(
+        (totalProtein, meal) => totalProtein + meal.protein,
+        0
+      );
+    });
+    return meal;
+  };
+
+  const tableRows = DiaryDetails.map((diary) => ({
+    id: diary.id,
+    creationDate: diary.creationDate,
+    totalCalories: diary.totalCalories,
+    protein: calculateMacro(diary.dinner),
+  }));
+
   const rows = [
     {
       id: 1143155,
@@ -65,31 +111,24 @@ const List = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Tracking ID</TableCell>
-            <TableCell className="tableCell">Product</TableCell>
-            <TableCell className="tableCell">Customer</TableCell>
             <TableCell className="tableCell">Date</TableCell>
-            <TableCell className="tableCell">Amount</TableCell>
-            <TableCell className="tableCell">Payment Method</TableCell>
+            <TableCell className="tableCell">Total Calories</TableCell>
+            <TableCell className="tableCell">Protein</TableCell>
+            <TableCell className="tableCell">Carbohydrates</TableCell>
+            <TableCell className="tableCell">Fat</TableCell>
             <TableCell className="tableCell">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {tableRows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell className="tableCell">{row.id}</TableCell>
+              <TableCell className="tableCell">{row.creationDate}</TableCell>
+              <TableCell className="tableCell">{row.totalCalories}</TableCell>
+              <TableCell className="tableCell">{row.protein}</TableCell>
+              <TableCell className="tableCell">85</TableCell>
+              <TableCell className="tableCell">40</TableCell>
               <TableCell className="tableCell">
-                <div className="cellWrapper">
-                  <img src={row.img} alt="" className="image" />
-                  {row.product}
-                </div>
-              </TableCell>
-              <TableCell className="tableCell">{row.customer}</TableCell>
-              <TableCell className="tableCell">{row.date}</TableCell>
-              <TableCell className="tableCell">{row.amount}</TableCell>
-              <TableCell className="tableCell">{row.method}</TableCell>
-              <TableCell className="tableCell">
-                <span className={`status ${row.status}`}>{row.status}</span>
+                <Chip label="good" color="success" variant="outlined" />
               </TableCell>
             </TableRow>
           ))}

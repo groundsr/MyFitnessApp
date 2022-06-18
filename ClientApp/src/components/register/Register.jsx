@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -121,14 +120,7 @@ const SignUp = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+              
             </Grid>
             <Button
               type="submit"
@@ -147,7 +139,7 @@ const SignUp = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }}  */}
       </Container>
     </ThemeProvider>
   );

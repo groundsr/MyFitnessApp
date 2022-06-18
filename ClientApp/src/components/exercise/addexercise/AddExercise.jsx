@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import "./addexercise.scss";
 import { Paper } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,15 +9,15 @@ import InputBase from "@mui/material/InputBase";
 import Table from "./Table";
 
 
-const AddFood = () => {
+const AddExercise = () => {
   const [input, setInput] = useState("");
-  const [searchedFood, setSearchedFood] = useState([]);
+  const [searchedExercise, setSearchedExercise] = useState([]);
 
   const fetchDetails = async () => {
     const data = axios
-      .get("https://localhost:44325/meal/get")
+      .get("https://localhost:44325/exercise/get")
       .then((response) => {
-        setSearchedFood(response.data);
+        setSearchedExercise(response.data);
       });
   };
 
@@ -61,10 +60,10 @@ const AddFood = () => {
             </IconButton>
           </Paper>
         </div>
-        <Table data={search(searchedFood)}/>
+        <Table data={search(searchedExercise)}/>
       </div>
     </>
   );
 };
 
-export default AddFood;
+export default AddExercise;

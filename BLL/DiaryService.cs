@@ -46,6 +46,7 @@ namespace MyFitnessApp.BLL
         }
         public void Create(Diary diary)
         {
+            diary.CreationDate = System.DateTime.Today;
             _diaryRepository.Add(diary);
         }
         public void Update(Diary diary)

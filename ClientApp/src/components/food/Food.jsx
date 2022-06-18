@@ -19,7 +19,7 @@ import { Button } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: 'rgb(35, 7, 56)',
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {

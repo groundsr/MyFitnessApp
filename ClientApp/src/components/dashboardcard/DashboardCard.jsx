@@ -39,7 +39,8 @@ const DashboardCard = () => {
       marginTop: 4,
       maxWidth: 'lg',
       flexGrow: 1,
-      backgroundColor: 'rgb(50, 167, 225)'
+      // backgroundColor: 'rgb(50, 167, 225)'
+      backgroundColor: 'rgb(64, 71, 74)'
     }}>
       <div className='title'>
         Your daily summary
@@ -67,14 +68,16 @@ const DashboardCard = () => {
             <div className="upperHalf">
               <div className="Remaining">
                 Calories remaining:
-                <div className="Calories">{userPlan.totalCalories}</div>
+                {/* <div className="Calories">{userPlan.totalCalories}</div> */}
+                <div className="Calories">2710</div>
+
               </div>
               <div className="buttons">
                 <div className="button">
-                  <Button variant="outlined">Add food</Button>
+                  <Button color="secondary" variant="outlined">Add food</Button>
                 </div>
                 <div className="button">
-                  <Button variant="outlined">Add exercise</Button>
+                  <Button color="secondary" variant="outlined">Add exercise</Button>
                 </div>
               </div>
             </div>
@@ -87,25 +90,25 @@ const DashboardCard = () => {
                 </Grid>
                 <span className="vl"></span>
                 <Grid item xs={2}>
-                  210 <div>Food</div>
+                  0 <div>Food</div>
                 </Grid>
                 <Grid item xs={1}>
                   -
                 </Grid>
                 <Grid item xs={2}>
-                  <div>Exercise</div>
+                 0 <div>Exercise</div>
                 </Grid>
                 <Grid item xs={1}>
                   =
                 </Grid>
                 <Grid item xs={2}>
-                  210 <div>Net</div>
+                  0 <div>Net</div>
                 </Grid>
               </Grid>
             </div>
           </Grid>
           <Grid item xs>
-            <Pie percentage={85} colour="rgb(50, 167, 225)" />
+            <Pie percentage={85} colour="blueviolet" />
           </Grid>
         </Grid>
       </Paper>

@@ -1,6 +1,8 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Link } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { purple } from "@mui/material/colors";
 
 const Table = ({ data }) => {
   let dataRows = data.map((item) => ({
@@ -13,6 +15,13 @@ const Table = ({ data }) => {
     quantity: 0,
   }));
 
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: purple[700],
+    '&:hover': {
+      backgroundColor: purple[900],
+    },
+  }));
   
 
   
@@ -42,7 +51,7 @@ const Table = ({ data }) => {
         id:7, field: "add", headerName: "Add to diary", width: 200, headerAlign: "center", align: "center",
         renderCell: () => {
             
-            return <Button variant="contained">Add</Button>
+            return <ColorButton variant="contained">Add</ColorButton>
         }
     },
   ];
