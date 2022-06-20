@@ -1,4 +1,5 @@
 import Home from "./pages/home/Home";
+import RecipeHome from "./pages/recipe/RecipeHome";
 import LoginPage from "./pages/login/LoginPage";
 import {useState,useEffect} from "react";
 import List from "./pages/list/List";
@@ -20,6 +21,7 @@ import ActivityLevelPage from "./pages/register/ActivityLevelPage";
 import WeightGoalPage from "./pages/register/WeightGoalPage";
 import PersonalInfoPage from "./pages/register/PersonalInfoPage";
 import ExercisePage from "./pages/exercise/ExercisePage";
+import Searched from "./pages/recipe/Searched";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -80,6 +82,10 @@ function App() {
               <Route index element={<ExercisePage name={name}/>} />
               <Route path=":add" element={<AddExercisePage name={name}/>} />
             </Route>
+            <Route path="recipe">
+              <Route index element={<RecipeHome name={name}/>}/>
+            </Route>
+            <Route path="/searched/:search" element={<Searched />} />
           </Route>
         </Routes>
       </BrowserRouter>

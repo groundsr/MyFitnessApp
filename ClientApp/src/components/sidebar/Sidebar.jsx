@@ -99,7 +99,7 @@ const Sidebar = (props) => {
               <span>Users</span>
             </li>
           </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/recipe" style={{ textDecoration: "none" }}>
             <li>
               <MenuBookIcon className="icon" />
               <span>Recipes</span>
