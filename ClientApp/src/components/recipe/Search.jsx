@@ -4,7 +4,7 @@ import { InputBase } from "@mui/material";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Paper } from "@mui/material";
-// import "./search.scss";
+import "./search.scss";
 
 const Search = () => {
   const [input, setInput] = useState("");
@@ -17,6 +17,7 @@ const Search = () => {
 
   return (
     <div className="container">
+      <div className="SearchLabel">Search endless recipes by name from Spoonacular database (macros included)</div>
       <Paper
         onSubmit={submitHandler}
         component="form"
@@ -25,6 +26,7 @@ const Search = () => {
           p: "2px 4px",
           display: "flex",
           width: 400,
+          boxShadow: 3,
         }}
       >
         <InputBase

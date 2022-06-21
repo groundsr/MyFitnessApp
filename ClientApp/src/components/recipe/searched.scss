@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  margin: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-gap: 3rem;
+
+  .card {
+    cursor: pointer;
+    img {
+      width: 100%;
+      border-radius: 2rem;
+    }
+    a{
+        text-decoration: none;
+    }
+    h3 {
+      text-align: center;
+      text-decoration: underline;
+      color: black;
+      padding: 1rem;
+    }
+  }
+}

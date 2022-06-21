@@ -1,8 +1,18 @@
-img {
-  height: 200px;
-}
+.dashboardContainer {
+  justify-content: space-between;
+  padding: 40px 15px 40px 15px;
+  margin: 20px;
 
-.title{
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  border-radius: 10px;
+
+
+  img {
+    height: 200px;
+  }
+
+  .title {
     width: 100%;
     margin-left: 10px;
     font-size: 18px;
@@ -10,66 +20,63 @@ img {
     color: #fff;
     display: flex;
     align-items: center;
-}
+  }
 
-.upperHalf{
-    display:flex;
+  .upperHalf {
+    display: flex;
     margin-bottom: 20px;
 
-    .buttons{
-        display:flex;
-        width: 70%;
-        justify-content: center;
-        align-items:center;
+    .buttons {
+      display: flex;
+      width: 70%;
+      justify-content: center;
+      align-items: center;
 
-        .button{
-            margin-right: 20px;
-            border-radius: 50%;
-        }
+      .button {
+        margin-right: 20px;
+        border-radius: 50%;
+      }
     }
-}
-
-
-
-.Remaining {
-  font-weight: 600;
-  font-size: large;
-
-  .Calories {
-    font-size: 35px;
-    // color: rgb(50, 167, 225);
-    color: blueviolet;
-
   }
-}
 
-hr {
-  height: 0;
-  border: 0.5px solid rgb(230, 227, 227);
-}
+  .Remaining {
+    font-weight: 600;
+    font-size: large;
 
-.count {
-  padding-top: 20px;
-  font-size: 25px;
-  display: flex;
-
-  .countItem {
-    
-    .span{
-        display: flex;
+    .Calories {
+      font-size: 35px;
+      // color: rgb(50, 167, 225);
+      color: blueviolet;
     }
+  }
 
-    .vl {
+  hr {
+    height: 0;
+    border: 0.5px solid rgb(230, 227, 227);
+  }
+
+  .count {
+    padding-top: 20px;
+    font-size: 25px;
+    display: flex;
+
+    .countItem {
+      .span {
+        display: flex;
+      }
+
+      .vl {
         display: flex;
         border-left: 2px solid rgb(230, 227, 227);
         height: 100px;
       }
-  }
+    }
 
-  .vl {
-    border-left: 2px solid rgb(230, 227, 227);
-    height: 100px;
-    // background-color: aqua;
-    background-color: blueviolet;
+    .vl {
+      border-left: 2px solid rgb(230, 227, 227);
+      height: 100px;
+      // background-color: aqua;
+      background-color: blueviolet;
+    }
   }
 }

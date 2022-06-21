@@ -33,85 +33,89 @@ const DashboardCard = () => {
 
   return (
     <>
-    <Box sx={{
-      p:2,
-      margin: "auto",
-      marginTop: 4,
-      maxWidth: 'lg',
-      flexGrow: 1,
-      // backgroundColor: 'rgb(50, 167, 225)'
-      backgroundColor: 'rgb(64, 71, 74)'
-    }}>
-      <div className='title'>
-        Your daily summary
+      <div className="dashboardContainer">
+        <Box
+          sx={{
+            p: 2,
+            margin: "auto",
+            maxWidth: "95%",
+            flexGrow: 1,
+            // backgroundColor: 'rgb(50, 167, 225)'
+            backgroundColor: "rgb(64, 71, 74)",
+          }}
+        >
+          <div className="title">Your daily summary</div>
+        </Box>
+        <Paper
+          sx={{
+            p: 2,
+            margin: "auto",
+            maxWidth: "95%",
+            flexGrow: 1,
+            boxShadow: 1,
+            backgroundColor: (theme) =>
+              theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+          }}
+        >
+          <Grid container>
+            <Grid sx={{marginLeft: 2}} item xs>
+              <img
+                src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png"
+                alt=""
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <div className="upperHalf">
+                <div className="Remaining">
+                  Calories remaining:
+                  {/* <div className="Calories">{userPlan.totalCalories}</div> */}
+                  <div className="Calories">2710</div>
+                </div>
+                <div className="buttons">
+                  <div className="button">
+                    <Button color="secondary" variant="outlined">
+                      Add food
+                    </Button>
+                  </div>
+                  <div className="button">
+                    <Button color="secondary" variant="outlined">
+                      Add exercise
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <hr></hr>
+              <div className="lowerHalf">
+                <Grid container className="count" spacing={2}>
+                  <Grid item className="countItem" xs={2}>
+                    2710
+                    <span className="span">Goal</span>
+                  </Grid>
+                  <span className="vl"></span>
+                  <Grid item xs={2}>
+                    0 <div>Food</div>
+                  </Grid>
+                  <Grid item xs={1}>
+                    -
+                  </Grid>
+                  <Grid item xs={2}>
+                    0 <div>Exercise</div>
+                  </Grid>
+                  <Grid item xs={1}>
+                    =
+                  </Grid>
+                  <Grid item xs={2}>
+                    0 <div>Net</div>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <Pie percentage={85} colour="blueviolet" />
+            </Grid>
+          </Grid>
+        </Paper>
       </div>
-    </Box>
-      <Paper
-        sx={{
-          p: 2,
-          margin: "auto",
-          maxWidth: 'lg',
-          flexGrow: 1,
-          backgroundColor: (theme) =>
-            theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-        }}
-      >
-        
-        <Grid container spacing={2}>
-          <Grid item xs>
-            <img
-              src="https://corestrengthblog.files.wordpress.com/2013/04/fitman.png"
-              alt=""
-            />
-          </Grid>
-          <Grid item xs={7}>
-            <div className="upperHalf">
-              <div className="Remaining">
-                Calories remaining:
-                {/* <div className="Calories">{userPlan.totalCalories}</div> */}
-                <div className="Calories">2710</div>
-
-              </div>
-              <div className="buttons">
-                <div className="button">
-                  <Button color="secondary" variant="outlined">Add food</Button>
-                </div>
-                <div className="button">
-                  <Button color="secondary" variant="outlined">Add exercise</Button>
-                </div>
-              </div>
-            </div>
-            <hr></hr>
-            <div className="lowerHalf">
-              <Grid container className="count" spacing={2}>
-                <Grid item className="countItem" xs={2}>
-                  2710
-                  <span className="span">Goal</span>
-                </Grid>
-                <span className="vl"></span>
-                <Grid item xs={2}>
-                  0 <div>Food</div>
-                </Grid>
-                <Grid item xs={1}>
-                  -
-                </Grid>
-                <Grid item xs={2}>
-                 0 <div>Exercise</div>
-                </Grid>
-                <Grid item xs={1}>
-                  =
-                </Grid>
-                <Grid item xs={2}>
-                  0 <div>Net</div>
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-          <Grid item xs>
-            <Pie percentage={85} colour="blueviolet" />
-          </Grid>
-        </Grid>
-      </Paper>
     </>
   );
 };

@@ -1,0 +1,23 @@
+.recipeContainer{
+  .active {
+    background: linear-gradient(35deg, #494949, #313131);
+    color: white;
+  }
+  .recipeTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .img{
+    height: 200px;
+    display: flex;
+    margin:auto;
+    
+  }
+  h4{
+    margin-left:0;
+    text-decoration: none;
+  }
+  
+}

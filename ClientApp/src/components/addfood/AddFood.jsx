@@ -49,6 +49,7 @@ const AddFood = () => {
             }}
           >
             <InputBase
+              className="searchTest"
               sx={{ ml: 1, flex: 1 }}
               placeholder={"Search..."}
               onChange={(e) => setInput(e.target.value)}

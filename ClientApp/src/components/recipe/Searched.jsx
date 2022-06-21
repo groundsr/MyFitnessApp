@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
+import "./searched.scss";
 
 const Searched = () => {
   const [searchedRecipes, setSearchedRecipes] = useState([]);
@@ -26,26 +26,24 @@ const Searched = () => {
 
   const getSearched = async (name) => {
     const data = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=da31a1a24a434b84bbc2052ce48b504f&query=${name}`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=038d079565ff480b8db22222c57fd35c&query=${name}&number=12`
     );
     const recipes = await data.json();
     setSearchedRecipes(recipes.results);
   };
   return (
-    <Grid sx={{ m: 2 }} container spacing={2}>
+    <div className="grid">
       {searchedRecipes.map((recipe) => {
         return (
           <Link to={"/recipe/" + recipe.id}>
-            <Grid item xs={3}>
-              <Item key={recipe.id}>
-                <img src={recipe.image} alt=""></img>
-                <h4>{recipe.title}</h4>
-              </Item>
-            </Grid>
+            <div className="card" key={recipe.id}>
+              <img src={recipe.image} alt=""/>
+              <h3>{recipe.title}</h3>
+            </div>
           </Link>
         );
       })}
-    </Grid>
+      </div>
   );
 };
 
