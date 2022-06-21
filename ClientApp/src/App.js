@@ -24,6 +24,7 @@ import ExercisePage from "./pages/exercise/ExercisePage";
 import Searched from "./components/recipe/Searched";
 import SearchPage from "./pages/recipe/SearchPage";
 import RecipePage from "./pages/recipe/RecipePage";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -47,7 +48,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Home name={name} setName={setName} />} />
-            <Route path="login" element={<LoginPage name={name} />} />
+            <Route path="login" element={<LoginPage name={name} setName={setName}/>} />
             <Route path="account">
               <Route index element={<WelcomePage />} />
               <Route path="goals" element={<WeightGoalPage />} />
@@ -94,7 +95,7 @@ function App() {
               <Route index element={<RecipeHome name={name} />} />
             </Route>
             <Route path="/recipe/:id" element={<RecipePage name={name} />} />
-
+            <Route path="profile" element={<Profile name={name} />} />
             <Route
               path="searched/:search"
               element={<SearchPage name={name} />}

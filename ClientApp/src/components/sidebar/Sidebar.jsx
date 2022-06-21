@@ -136,7 +136,7 @@ const Sidebar = (props) => {
             <span>Settings</span>
           </li> */}
           <p className="title">USER</p>
-          <Link to="/users/test" style={{ textDecoration: "none" }}>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>

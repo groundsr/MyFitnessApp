@@ -20,7 +20,6 @@ const DashboardCard = () => {
       .then((response) => {
         const data = response.data[0];
         setUser(data);
-        console.log(data);
         setUserGoal(data.userGoal);
         setUserPlan(data.userGoal.userPlan);
       })

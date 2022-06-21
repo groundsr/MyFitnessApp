@@ -10,7 +10,7 @@ import DashboardCard from "../../components/dashboardcard/DashboardCard";
 const Home = (props) => {
   return (
     <div className="home">
-      <Sidebar name={props.name} />
+      <Sidebar name={props.name} setName={props.setName}/>
       <div className="homeContainer">
         <Navbar name={props.name} />
         {/* <div className="widgets">
@@ -19,7 +19,7 @@ const Home = (props) => {
           <Widget type="earning" />
           <Widget type="balance" />
         </div> */}
-        <div class="card">
+        <div className="card">
           <DashboardCard />
         </div>
         <div className="charts">

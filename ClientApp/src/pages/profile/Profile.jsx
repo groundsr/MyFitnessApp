@@ -5,15 +5,15 @@ import Chart from "../../components/chart/Chart";
 import List from "../../components/table/Table";
 
 
-const Profile = () => {
+const Profile = (props) => {
 
   
 
   return (
     <div className="single">
-      <Sidebar />
+      <Sidebar name={props.name}/>
       <div className="singleContainer">
-        <Navbar />
+        <Navbar name={props.name}/>
         <div className="top">
           <div className="left">
             <div className="editButton">Edit</div>
@@ -53,7 +53,7 @@ const Profile = () => {
         </div>
         <div className="bottom">
         <h1 className="title">Nutrition (Last 7 days)</h1>
-          <List/>
+          <List name={props.name}/>
         </div>
       </div>
     </div>

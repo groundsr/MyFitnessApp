@@ -19,7 +19,6 @@ const List = () => {
     const data = axios
       .get("https://localhost:44325/diary/get")
       .then((response) => {
-        console.log(response.data[0].lunch.meals);
         SetDiaryDetails(response.data);
       });
   };
