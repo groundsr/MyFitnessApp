@@ -32,7 +32,7 @@ const AddFood = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="addFoodContainer">
         <div className="foodTitle">Add Food To Breakfast</div>
         <hr className="line"></hr>
         <div className="SearchLabel">Search our food database by name</div>

@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Summarize } from "@mui/icons-material";
 import Chip from "@mui/material/Chip";
 
 const List = () => {
@@ -27,15 +26,6 @@ const List = () => {
     fetchDetails();
   }, []);
 
-  // let dataRows = data.map((item) => ({
-  //   id: item.id,
-  //   name: item.name,
-  //   protein: item.protein,
-  //   calories: item.calories,
-  //   fat: item.fat,
-  //   carbs: item.carbohydrates,
-  //   quantity: 0,
-  // }));
   const calculateMacro = (meal) => {
     DiaryDetails.map((diary) => {
       meal = diary.lunch.meals.reduce(

@@ -32,7 +32,7 @@ const AddExercise = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="addExerciseContainer">
         <div className="foodTitle">Add Exercise</div>
         <hr className="line"></hr>
         <div className="SearchLabel">Search our exercise database by name</div>

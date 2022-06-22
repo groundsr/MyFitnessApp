@@ -7,9 +7,9 @@ import React from 'react'
 const FoodPage = (props) => {
     return (
         <div className="food">
-          <Sidebar name={props.name}/>
+          <Sidebar name={props.name} setName={props.setName}/>
           <div className="foodContainer">
-            <Navbar name={props.name}/>
+            <Navbar name={props.name} setName={props.setName}/>
             <Food/>
           </div>
         </div>

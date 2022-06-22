@@ -11,9 +11,9 @@ const Profile = (props) => {
 
   return (
     <div className="single">
-      <Sidebar name={props.name}/>
+      <Sidebar name={props.name} setName={props.setName}/>
       <div className="singleContainer">
-        <Navbar name={props.name}/>
+        <Navbar name={props.name} setName={props.setName}/>
         <div className="top">
           <div className="left">
             <div className="editButton">Edit</div>

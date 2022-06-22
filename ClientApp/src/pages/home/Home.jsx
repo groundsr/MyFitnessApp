@@ -1,10 +1,8 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import "./home.scss";
-import Widget from "../../components/widget/Widget";
 import Featured from "../../components/featured/Featured";
 import Chart from "../../components/chart/Chart";
-import Table from "../../components/table/Table";
 import DashboardCard from "../../components/dashboardcard/DashboardCard";
 
 const Home = (props) => {
@@ -13,12 +11,6 @@ const Home = (props) => {
       <Sidebar name={props.name} setName={props.setName}/>
       <div className="homeContainer">
         <Navbar name={props.name} />
-        {/* <div className="widgets">
-          <Widget type="user" />
-          <Widget type="order" />
-          <Widget type="earning" />
-          <Widget type="balance" />
-        </div> */}
         <div className="card">
           <DashboardCard />
         </div>

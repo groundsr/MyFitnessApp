@@ -6,10 +6,10 @@ import Datatable from "../../components/datatable/Datatable"
 const List = (props) => {
   return (
     <div className="list">
-      <Sidebar name={props.name}/>
+      <Sidebar name={props.name} setName={props.setName}/>
       <div className="listContainer">
-        <Navbar name={props.name}/>
-        <Datatable />
+        <Navbar name={props.name} setName={props.setName}/>
+        <Datatable name={props.name}/>
       </div>
     </div>
   )

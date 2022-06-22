@@ -6,9 +6,9 @@ import DashboardCard from "../../components/dashboardcard/DashboardCard";
 const Dashboard = (props) => {
   return (
     <div className="home">
-      <Sidebar name={props.name}/>
+      <Sidebar name={props.name} setName={props.setName}/>
       <div className="homeContainer">
-        <Navbar name={props.name}/>
+        <Navbar name={props.name} setName={props.setName}/>
         <DashboardCard />
       </div>
     </div>

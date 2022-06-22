@@ -7,9 +7,9 @@ import "./addexercisepage.scss"
 const AddFoodPage = (props) => {
   return (
     <div className="exercise">
-    <Sidebar name={props.name}/>
+    <Sidebar name={props.name} setName={props.setName}/>
     <div className="exerciseContainer">
-      <Navbar name={props.name}/>
+      <Navbar name={props.name} setName={props.setName}/>
       <AddExercise/>
     </div>
   </div>

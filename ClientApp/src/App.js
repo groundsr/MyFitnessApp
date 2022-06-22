@@ -57,8 +57,8 @@ function App() {
               <Route path="register" element={<RegisterPage name={name} />} />
             </Route>
             <Route path="users">
-              <Route index element={<List name={name} />} />
-              <Route path=":userId" element={<Single name={name} />} />
+              <Route index element={<List name={name} setName={setName}/>} />
+              <Route path=":userId" element={<Single name={name} setName={setName}/>} />
               <Route
                 path="new"
                 element={
@@ -80,25 +80,25 @@ function App() {
                 }
               />
             </Route>
-            <Route path="home">
-              <Route index element={<Dashboard name={name} />} />
-            </Route>
+            {/* <Route path="home">
+              <Route index element={<Dashboard name={name} setName={setName}/>} />
+            </Route> */}
             <Route path="food">
-              <Route index element={<FoodPage name={name} />} />
-              <Route path=":add" element={<AddFoodPage name={name} />} />
+              <Route index element={<FoodPage name={name} setName={setName}/>} />
+              <Route path=":add" element={<AddFoodPage name={name} setName={setName}/>} />
             </Route>
             <Route path="exercise">
-              <Route index element={<ExercisePage name={name} />} />
-              <Route path=":add" element={<AddExercisePage name={name} />} />
+              <Route index element={<ExercisePage name={name} setName={setName}/>} />
+              <Route path=":add" element={<AddExercisePage name={name} setName={setName}/>} />
             </Route>
             <Route path="recipes">
-              <Route index element={<RecipeHome name={name} />} />
+              <Route index element={<RecipeHome name={name} setName={setName}/>} />
             </Route>
-            <Route path="/recipe/:id" element={<RecipePage name={name} />} />
-            <Route path="profile" element={<Profile name={name} />} />
+            <Route path="/recipe/:id" element={<RecipePage name={name} setName={setName}/>} />
+            <Route path="profile" element={<Profile name={name} setName={setName}/>} />
             <Route
               path="searched/:search"
-              element={<SearchPage name={name} />}
+              element={<SearchPage name={name} setName={setName}/>}
             />
           </Route>
         </Routes>

@@ -11,10 +11,10 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import RestaurantIcon from '@mui/icons-material/Restaurant';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import LoginIcon from '@mui/icons-material/Login';
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
@@ -24,16 +24,13 @@ const Sidebar = (props) => {
   let menu;
 
   const logout = async () => {
-    await fetch('https://localhost:44325/api/logout', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      credentials: 'include',
+    await fetch("https://localhost:44325/api/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
-
-    props.setName('');
-  }
- 
-
+    props.setName("");
+  };
 
   if (!props.name) {
     menu = (
@@ -74,12 +71,20 @@ const Sidebar = (props) => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <Link to="/home" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
               <span>Home</span>
             </li>
           </Link>
+          
+          <p className="title">LISTS</p>
+          {/* <Link to="/users" style={{ textDecoration: "none" }}>
+            <li>
+              <PersonOutlineIcon className="icon" />
+              <span>Users</span>
+            </li>
+          </Link> */}
           <Link to="/food" style={{ textDecoration: "none" }}>
             <li>
               <RestaurantIcon className="icon" />
@@ -90,13 +95,6 @@ const Sidebar = (props) => {
             <li>
               <FitnessCenterIcon className="icon" />
               <span>Exercises</span>
-            </li>
-          </Link>
-          <p className="title">LISTS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
-            <li>
-              <PersonOutlineIcon className="icon" />
-              <span>Users</span>
             </li>
           </Link>
           <Link to="/recipes" style={{ textDecoration: "none" }}>
@@ -137,10 +135,10 @@ const Sidebar = (props) => {
           </li> */}
           <p className="title">USER</p>
           <Link to="/profile" style={{ textDecoration: "none" }}>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
+            </li>
           </Link>
           {menu}
         </ul>
