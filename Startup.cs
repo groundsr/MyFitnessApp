@@ -69,7 +69,7 @@ namespace MyFitnessApp
 
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyHeader().WithOrigins(new[] { "http://localhost:3000", "https://localhost:3000", "http://localhost:8080" })
+            app.UseCors(options => options.AllowAnyHeader().WithOrigins(new[] { "http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "https://localhost:3000", "http://localhost:8080" })
             .AllowAnyMethod().AllowCredentials());
 
             app.UseAuthorization();
