@@ -36,13 +36,8 @@ namespace MyFitnessApp.BLL
         {
             var userToUpdate = _userRepository.Get(user.Id);
             userToUpdate.Email = user.Email;
-            userToUpdate.Weight = user.Weight;
-            userToUpdate.BirthDay = user.BirthDay;
-            userToUpdate.Height = user.Height;
             userToUpdate.Name = user.Name;
-            userToUpdate.Sex = user.Sex;
             userToUpdate.Password = user.Password;
-            userToUpdate.UserGoal = user.UserGoal;
             _userRepository.Update(userToUpdate);
 
         }

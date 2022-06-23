@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Data;
+using MyFitnessApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace MyFitnessApp.DAL
             this.context = context;
             dbSet = context.Set<T>();
         }
+        
         public void Save()
         {
             context.SaveChanges();
@@ -32,7 +35,7 @@ namespace MyFitnessApp.DAL
         {
             return dbSet.Find(id);
         }
-        
+
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query = dbSet;

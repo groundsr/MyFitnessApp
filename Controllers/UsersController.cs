@@ -56,7 +56,7 @@ namespace MyFitnessApp.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
+        [Route("update/{id}")]
         public IActionResult Update(User user)
         {
             try
@@ -78,7 +78,8 @@ namespace MyFitnessApp.Controllers
                 }
 
                 _userService.Update(user);
-                return Ok("User has been updated succesfully");
+                //return Ok("User has been updated succesfully");
+                return Ok(user);
             }
             catch (Exception ex)
             {

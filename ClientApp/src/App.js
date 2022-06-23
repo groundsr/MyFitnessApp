@@ -29,6 +29,13 @@ import Profile from "./pages/profile/Profile";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [name, setName] = useState("");
+  const [user, setUser] = useState({});
+  const [userGoal, setUserGoal] = useState({});
+  const [userPlan, setUserPlan] = useState({});
+
+  const pull_data = (data) => {
+    console.log(data);
+  }
 
   useEffect(() => {
     (async () => {
@@ -38,9 +45,13 @@ function App() {
       });
 
       const content = await response.json();
+      console.log(content);
+      setUserPlan(content.userGoal.userPlan);
+      setUserGoal(content.userGoal);
       setName(content.name);
+      setUser(content);
     })();
-  });
+  },[name]);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
@@ -95,7 +106,7 @@ function App() {
               <Route index element={<RecipeHome name={name} setName={setName}/>} />
             </Route>
             <Route path="/recipe/:id" element={<RecipePage name={name} setName={setName}/>} />
-            <Route path="profile" element={<Profile name={name} setName={setName}/>} />
+            <Route path="profile" element={<Profile name={name} setName={setName} user={user} userGoal={userGoal} userPlan={userPlan}/>} />
             <Route
               path="searched/:search"
               element={<SearchPage name={name} setName={setName}/>}

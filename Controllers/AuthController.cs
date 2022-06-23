@@ -29,7 +29,8 @@ namespace MyFitnessApp.Controllers
             {
                 Name = dto.Name,
                 Email = dto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+                //Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+                Password = dto.Password,
             };
 
             _userService.Create(user);
@@ -43,7 +44,8 @@ namespace MyFitnessApp.Controllers
 
             if (user == null) return BadRequest("Invalid Credentials");
 
-            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            //if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            if(dto.Password != user.Password)
             {
                 return BadRequest("Invalid Credentials");
             }

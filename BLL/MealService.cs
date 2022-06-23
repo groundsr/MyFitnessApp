@@ -1,4 +1,5 @@
-﻿using MyFitnessApp.DAL.Abstractions;
+﻿using MyFitnessApp.DAL;
+using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Models;
 using System.Collections.Generic;
 
@@ -8,9 +9,11 @@ namespace MyFitnessApp.BLL
     public class MealService
     {
         private readonly IMealRepository _mealRepository;
-        public MealService(IMealRepository mealRepository)
+        private readonly EFMealRepository repo;
+        public MealService(IMealRepository mealRepository, EFMealRepository repo)
         {
             _mealRepository = mealRepository;
+            this.repo = repo;
         }
         public IEnumerable<Meal> GetAll()
         {
