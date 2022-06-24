@@ -122,12 +122,12 @@ const Login = (props) => {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
+            <Grid container sx={{display: 'flex', justifyContent: 'end'}}>
+              {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link href="#" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -136,7 +136,7 @@ const Login = (props) => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

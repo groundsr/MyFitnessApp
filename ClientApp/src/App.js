@@ -33,10 +33,6 @@ function App() {
   const [userGoal, setUserGoal] = useState({});
   const [userPlan, setUserPlan] = useState({});
 
-  const pull_data = (data) => {
-    console.log(data);
-  }
-
   useEffect(() => {
     (async () => {
       const response = await fetch("https://localhost:44325/api/user", {
@@ -45,7 +41,7 @@ function App() {
       });
 
       const content = await response.json();
-      console.log(content);
+      // console.log(content);
       setUserPlan(content.userGoal.userPlan);
       setUserGoal(content.userGoal);
       setName(content.name);
