@@ -18,5 +18,18 @@ namespace MyFitnessApp.DAL
         {
             return _context.Users.FirstOrDefault(x => x.Email == email);
         }
+
+        public void SetCurrentWeight(int weight, int userId)
+        {
+
+            var user = _context.Users.Find(userId);
+            var userProgress = new UserProgress();
+            userProgress.CurrentWeight = weight;
+            userProgress.WeightLogDate = System.DateTime.Today;
+            userProgress.User = user;
+            _context.UserProgress.Add(userProgress);
+            _context.SaveChanges();
+            user.UserProgresses.Add(userProgress);
+        }
     }
 }

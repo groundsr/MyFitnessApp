@@ -45,6 +45,7 @@ namespace MyFitnessApp
             services.AddScoped<MealService>();
             services.AddScoped<IExerciseRepository, EFExerciseRepository>();
             services.AddScoped<ExerciseService>();
+            services.AddScoped<IUserProgressRepository, EfUserProgressRepository>();
             services.AddScoped<JwtService>();
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

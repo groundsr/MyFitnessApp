@@ -28,6 +28,11 @@ namespace MyFitnessApp.BLL
         {
             return _efUserRepository.GetByEmail(email);
         }
+        public void SetCurrentWeight(int weight, int id)
+        {
+            var user = Get(id);
+            _efUserRepository.SetCurrentWeight(weight, id);
+        }
         public void Create(User user)
         {
             _userRepository.Add(user);

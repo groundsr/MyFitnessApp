@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitnessApp.Data;
 
 namespace MyFitnessApp.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    partial class FitnessContextModelSnapshot : ModelSnapshot
+    [Migration("20220624161640_AddedUserProgress")]
+    partial class AddedUserProgress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,6 +217,9 @@ namespace MyFitnessApp.Migrations
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CurrentWeight")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
 
@@ -235,6 +240,9 @@ namespace MyFitnessApp.Migrations
 
                     b.Property<int>("Weight")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("WeightLogDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -301,29 +309,6 @@ namespace MyFitnessApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserPlan");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.UserProgress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CurrentWeight")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("WeightLogDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserProgress");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.Diary", b =>
@@ -400,15 +385,6 @@ namespace MyFitnessApp.Migrations
                     b.Navigation("UserPlan");
                 });
 
-            modelBuilder.Entity("MyFitnessApp.Models.UserProgress", b =>
-                {
-                    b.HasOne("MyFitnessApp.Models.User", "User")
-                        .WithMany("UserProgresses")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("MyFitnessApp.Models.Breakfast", b =>
                 {
                     b.Navigation("Meals");
@@ -437,8 +413,6 @@ namespace MyFitnessApp.Migrations
             modelBuilder.Entity("MyFitnessApp.Models.User", b =>
                 {
                     b.Navigation("Diaries");
-
-                    b.Navigation("UserProgresses");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.UserGoal", b =>

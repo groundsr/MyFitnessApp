@@ -15,6 +15,7 @@ namespace MyFitnessApp.Models
         public string Sex { get; set; }
         public int Height { get; set; }
         public int Weight { get; set; }
+        public virtual ICollection<UserProgress> UserProgresses { get; set; }
         public virtual UserGoal UserGoal { get; set; }
         public virtual ICollection<Diary> Diaries { get; set; }
 

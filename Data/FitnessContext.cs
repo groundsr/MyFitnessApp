@@ -22,6 +22,7 @@ namespace MyFitnessApp.Data
         public DbSet<Breakfast> Breakfast { get; set; }
         public DbSet<Lunch> Lunch { get; set; }
         public DbSet<Dinner> Dinner { get; set; }
+        public DbSet<UserProgress> UserProgress { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,7 @@ namespace MyFitnessApp.Data
             modelBuilder.Entity<Breakfast>().ToTable("Breakfast");
             modelBuilder.Entity<Lunch>().ToTable("Lunch");
             modelBuilder.Entity<Dinner>().ToTable("Dinner");
+            modelBuilder.Entity<UserProgress>().ToTable("UserProgress");
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();

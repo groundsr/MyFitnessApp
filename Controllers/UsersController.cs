@@ -31,6 +31,38 @@ namespace MyFitnessApp.Controllers
             var user = _userService.Get(id);
             return user;
         }
+        [HttpPost]
+        [Route("setWeight/{id}")]
+        public IActionResult SetCurrentWeight(int weight, int id)
+        {
+            var user = GetUser(id);
+            try
+            {
+                if (user is null)
+                {
+                    return BadRequest("User is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid object");
+                }
+
+                var userToUpdate = _userService.Get(user.Id);
+
+                if (userToUpdate is null)
+                {
+                    return NotFound();
+                }
+
+                _userService.SetCurrentWeight(weight, id);
+                //return Ok("User has been updated succesfully");
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         [HttpPost]
         [Route("create")]
