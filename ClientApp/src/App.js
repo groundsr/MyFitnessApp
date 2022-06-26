@@ -54,7 +54,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home name={name} setName={setName} />} />
+            <Route index element={<Home name={name} setName={setName} user={user} setUser={setUser}/>} />
             <Route path="login" element={<LoginPage name={name} setName={setName}/>} />
             <Route path="account">
               <Route index element={<WelcomePage />} />

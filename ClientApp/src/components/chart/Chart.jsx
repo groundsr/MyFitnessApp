@@ -7,25 +7,37 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useState, useEffect } from "react";
+import "axios";
 
-const data = [
-  { name: "January", Total: 85 },
-  { name: "February", Total: 88 },
-  { name: "March", Total: 90 },
-  { name: "April", Total: 91 },
-  { name: "May", Total: 93 },
-  { name: "June", Total: 98 },
-];
 
-const Chart = ({ aspect, title }) => {
+const Chart = (props) => {
+  const [user, setUser] = useState({ ...props.user });
+  const [userProgress, setUserProgress] = useState([]);
+
+  const relevantData =
+    user &&
+    userProgress &&
+    userProgress.map((progress) => ({
+      name: new Date(progress.weightLogDate).toLocaleString("default", {
+        month: "long",
+      }),
+      Total: progress.currentWeight,
+    }));
+
+  useEffect(() => {
+    setUser(props.user);
+    setUserProgress(props.user.userProgresses);
+  }, [props.user]);
+
   return (
     <div className="chart">
-      <div className="title">{title}</div>
-      <ResponsiveContainer width="100%" aspect={aspect}>
+      <div className="title">{props.title}</div>
+      <ResponsiveContainer width="100%" aspect={props.aspect}>
         <AreaChart
           width={730}
           height={250}
-          data={data}
+          data={relevantData}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>

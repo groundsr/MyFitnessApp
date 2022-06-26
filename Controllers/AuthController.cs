@@ -33,6 +33,9 @@ namespace MyFitnessApp.Controllers
                 Password = dto.Password,
             };
 
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _userService.Create(user);
             return Created("success", user);
         }

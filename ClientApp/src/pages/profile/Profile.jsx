@@ -13,10 +13,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect } from "react";
 import axios from "axios";
-import { IconButton} from "@mui/material";
-import { InputAdornment } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { IconButton } from "@mui/material";
+import { InputAdornment } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Profile = (props) => {
   const [open, setOpen] = useState(false);
@@ -132,7 +132,11 @@ const Profile = (props) => {
                           aria-label="toggle password visibility"
                           onClick={handleTogglePassword}
                         >
-                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                          {showPassword ? (
+                            <VisibilityIcon />
+                          ) : (
+                            <VisibilityOffIcon />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -181,7 +185,11 @@ const Profile = (props) => {
             </div>
           </div>
           <div className="right">
-            <Chart aspect={3 / 1} title="User Progress (Last 6 Months)" />
+            <Chart
+              user={user}
+              aspect={3 / 1}
+              title="User Progress (Last 6 Months)"
+            />
           </div>
         </div>
         <div className="bottom">

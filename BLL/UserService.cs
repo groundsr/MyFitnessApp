@@ -1,6 +1,7 @@
 ﻿using MyFitnessApp.DAL;
 using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Models;
+using System;
 using System.Collections.Generic;
 
 
@@ -30,11 +31,13 @@ namespace MyFitnessApp.BLL
         }
         public void SetCurrentWeight(int weight, int id)
         {
-            var user = Get(id);
             _efUserRepository.SetCurrentWeight(weight, id);
         }
         public void Create(User user)
         {
+            var bmi = user.Weight / ((user.Height / 100) * (user.Height / 100));
+            var twoDecBmi = Math.Round(bmi, 2);
+            user.Bmi = twoDecBmi;
             _userRepository.Add(user);
         }
         public void Update(User user)

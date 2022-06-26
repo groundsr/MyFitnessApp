@@ -23,7 +23,7 @@ namespace MyFitnessApp.DAL
         
         public void Save()
         {
-            context.SaveChanges();
+            context.SaveChanges();              
         }
         public void Add(T entity)
         {

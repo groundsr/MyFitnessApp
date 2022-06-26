@@ -9,29 +9,56 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import {Link} from "react-router-dom";
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import { Link } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useEffect } from "react";
 
-const DashboardCard = () => {
-  const [user, setUser] = useState({});
+const DashboardCard = (props) => {
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState();
+  const [user, setUser] = useState({ ...props.user });
+  const [userProgress, setUserProgress] = useState({});
   const [userGoal, setUserGoal] = useState({});
   const [userPlan, setUserPlan] = useState({});
+  const [currentWeight, setCurrentWeight] = useState();
   const url = "https://localhost:44325/users/get";
 
-  const getUserData = () => {
-    axios
-      .get(`${url}`)
-      .then((response) => {
-        const data = response.data[0];
-        setUser(data);
-        setUserGoal(data.userGoal);
-        setUserPlan(data.userGoal.userPlan);
-      })
-      .catch((error) => console.error(`Error: ${error}`));
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  React.useEffect(() => {
-    getUserData();
-  }, []);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const updateBodyweight = async () => {
+    await axios
+      .post(
+        `https://localhost:44325/Users/setWeight/${id}?weight=${currentWeight}`
+      )
+      .then((response) => {
+        console.log(response.data.userProgresses);
+        console.log(response.data);
+        setCurrentWeight(response.data.userProgresses.at(-1).currentWeight);
+        props.setUser((prevUser) => ({ ...prevUser, ...response.data }));
+        props.setCurrentWeight(
+          response.data.userProgresses.at(-1).currentWeight
+        );
+      });
+    handleClose();
+  };
+
+  useEffect(() => {
+    setUser(props.user);
+    setId(props.user.id);
+    setUserProgress(props.userProgress);
+    setCurrentWeight(props.currentWeight);
+  }, [props.user]);
 
   return (
     <>
@@ -76,19 +103,22 @@ const DashboardCard = () => {
                       <div className="Calories">2710</div>
                     </div>
                     <div className="buttons">
-                      <Link to="/food/add" style={{ textDecoration: 'none' }}>
+                      <Link to="/food/add" style={{ textDecoration: "none" }}>
                         <div className="button">
                           <Button color="secondary" variant="outlined">
                             Add food
                           </Button>
                         </div>
                       </Link>
-                      <Link to="/exercise/add" style={{ textDecoration: 'none' }}>
-                      <div className="button">
-                        <Button color="secondary" variant="outlined">
-                          Add exercise
-                        </Button>
-                      </div>
+                      <Link
+                        to="/exercise/add"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <div className="button">
+                          <Button color="secondary" variant="outlined">
+                            Add exercise
+                          </Button>
+                        </div>
                       </Link>
                     </div>
                   </div>
@@ -137,18 +167,43 @@ const DashboardCard = () => {
               }}
             >
               <div className="topInfo">Information</div>
+              <Button onClick={() => console.log(user.bmi)}>asd</Button>
               <div className="middleInfo">
                 <div className="bmi">
-                  Current BMI : <span>24.7</span>
+                  Current BMI : <span>{user.bmi}</span>
                   <span>
-                    <ThumbUpAltIcon className="icon" />
+                    {user.bmi > 25 || user.bmi <18 ? <ThumbDownAltIcon className="icon"/> : <ThumbUpAltIcon className="icon"/>}
+                    {/* <ThumbUpAltIcon className="icon" /> */}
                   </span>
                 </div>
                 <div className="bw">
-                  Current bodyweight : <span>85kg</span>
+                  Current bodyweight : <span> {props.currentWeight}kg</span>
                   <span>
-                    <ModeEditIcon className="editIcon" />
+                    <ModeEditIcon
+                      onClick={handleClickOpen}
+                      className="editIcon"
+                    />
                   </span>
+                  <Dialog type="form" open={open} onClose={handleClose}>
+                    <DialogTitle>Edit your current bodyweight</DialogTitle>
+                    <DialogContent>
+                      <TextField
+                        onChange={(e) => setCurrentWeight(e.target.value)}
+                        autoFocus
+                        defaultValue={props.currentWeight}
+                        margin="dense"
+                        id="currentWeight"
+                        label="Current weight"
+                        type="string"
+                        fullWidth
+                        variant="outlined"
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose}>Cancel</Button>
+                      <Button onClick={updateBodyweight}>Edit</Button>
+                    </DialogActions>
+                  </Dialog>
                 </div>
               </div>
               <div className="bottomInfo">

@@ -18,6 +18,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { Button } from "@mui/material";
 
 const Sidebar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
@@ -65,6 +66,7 @@ const Sidebar = (props) => {
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
           <span className="logo">MyFitnessPal</span>
+          <Button onClick={() => console.log(props.user)}>asd</Button>
         </Link>
       </div>
       <hr />

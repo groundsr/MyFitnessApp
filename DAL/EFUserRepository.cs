@@ -1,6 +1,7 @@
 ﻿using MyFitnessApp.DAL.Abstractions;
 using MyFitnessApp.Data;
 using MyFitnessApp.Models;
+using System;
 using System.Linq;
 
 namespace MyFitnessApp.DAL
@@ -21,15 +22,31 @@ namespace MyFitnessApp.DAL
 
         public void SetCurrentWeight(int weight, int userId)
         {
+            var flag = false;
 
             var user = _context.Users.Find(userId);
             var userProgress = new UserProgress();
             userProgress.CurrentWeight = weight;
-            userProgress.WeightLogDate = System.DateTime.Today;
             userProgress.User = user;
-            _context.UserProgress.Add(userProgress);
+            userProgress.WeightLogDate = System.DateTime.Today;
+            foreach (var userPrg in _context.UserProgress)
+            {
+                if (userPrg.WeightLogDate.Month == userProgress.WeightLogDate.Month)
+                {
+                    userPrg.CurrentWeight = userProgress.CurrentWeight;
+                    flag = true;
+                }
+
+            }
+            if (!flag)
+            {
+                _context.UserProgress.Add(userProgress);
+            }
+            var bmi = (double)userProgress.CurrentWeight / ((user.Height / 100) * (user.Height / 100));
+            var twoDecBmi = Math.Round(bmi, 2);
+            user.Bmi = twoDecBmi;
             _context.SaveChanges();
-            user.UserProgresses.Add(userProgress);
+
         }
     }
 }
