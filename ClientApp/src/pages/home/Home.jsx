@@ -21,6 +21,8 @@ const Home = (props) => {
   useEffect(() => {
     setUser(props.user);
     setUserProgress(props.user.userProgresses);
+    setUserGoal(props.user.userGoal);
+    // setUserPlan(props.user.userGoal.userPlan ? props.user.userGoal.userPlan : console.log("loading.."));
     setCurrentWeight(
       props.user.userProgresses
         ? props.user.userProgresses.at(-1).currentWeight
@@ -43,6 +45,8 @@ const Home = (props) => {
             user={user}
             setUser={setUser}
             userProgress={userProgress}
+            userGoal={userGoal}
+            userPlan={userPlan}
             currentWeight={currentWeight}
             setCurrentWeight={setCurrentWeight}
           />

@@ -3,21 +3,83 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitnessApp.Data;
 
 namespace MyFitnessApp.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    partial class FitnessContextModelSnapshot : ModelSnapshot
+    [Migration("20220627090945_fixedManyToMany")]
+    partial class fixedManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BreakfastMeal", b =>
+                {
+                    b.Property<int>("BreakfastsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BreakfastsId", "MealsId");
+
+                    b.HasIndex("MealsId");
+
+                    b.ToTable("BreakfastMeal");
+                });
+
+            modelBuilder.Entity("DiaryExercise", b =>
+                {
+                    b.Property<int>("DiariesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExercisesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DiariesId", "ExercisesId");
+
+                    b.HasIndex("ExercisesId");
+
+                    b.ToTable("DiaryExercise");
+                });
+
+            modelBuilder.Entity("DinnerMeal", b =>
+                {
+                    b.Property<int>("DinnersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DinnersId", "MealsId");
+
+                    b.HasIndex("MealsId");
+
+                    b.ToTable("DinnerMeal");
+                });
+
+            modelBuilder.Entity("LunchMeal", b =>
+                {
+                    b.Property<int>("LunchesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LunchesId", "MealsId");
+
+                    b.HasIndex("MealsId");
+
+                    b.ToTable("LunchMeal");
+                });
 
             modelBuilder.Entity("MyFitnessApp.Models.Breakfast", b =>
                 {
@@ -32,26 +94,6 @@ namespace MyFitnessApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Breakfast");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.BreakfastMeal", b =>
-                {
-                    b.Property<int>("BreakfastId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("BreakfastId", "MealId");
-
-                    b.HasIndex("MealId");
-
-                    b.ToTable("BreakfastMeals");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.Diary", b =>
@@ -92,26 +134,6 @@ namespace MyFitnessApp.Migrations
                     b.ToTable("Diary");
                 });
 
-            modelBuilder.Entity("MyFitnessApp.Models.DiaryExercise", b =>
-                {
-                    b.Property<int>("DiaryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HowLong")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("DiaryId", "ExerciseId");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.ToTable("DiaryExercises");
-                });
-
             modelBuilder.Entity("MyFitnessApp.Models.Dinner", b =>
                 {
                     b.Property<int>("Id")
@@ -125,26 +147,6 @@ namespace MyFitnessApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dinner");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.DinnerMeal", b =>
-                {
-                    b.Property<int>("DinnerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("DinnerId", "MealId");
-
-                    b.HasIndex("MealId");
-
-                    b.ToTable("DinnerMeals");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.Exercise", b =>
@@ -195,26 +197,6 @@ namespace MyFitnessApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lunch");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.LunchMeal", b =>
-                {
-                    b.Property<int>("LunchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("LunchId", "MealId");
-
-                    b.HasIndex("MealId");
-
-                    b.ToTable("LunchMeals");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.Meal", b =>
@@ -389,23 +371,64 @@ namespace MyFitnessApp.Migrations
                     b.ToTable("UserProgress");
                 });
 
-            modelBuilder.Entity("MyFitnessApp.Models.BreakfastMeal", b =>
+            modelBuilder.Entity("BreakfastMeal", b =>
                 {
-                    b.HasOne("MyFitnessApp.Models.Breakfast", "Breakfast")
-                        .WithMany("BreakfastMeals")
-                        .HasForeignKey("BreakfastId")
+                    b.HasOne("MyFitnessApp.Models.Breakfast", null)
+                        .WithMany()
+                        .HasForeignKey("BreakfastsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyFitnessApp.Models.Meal", "Meal")
-                        .WithMany("BreakfastMeals")
-                        .HasForeignKey("MealId")
+                    b.HasOne("MyFitnessApp.Models.Meal", null)
+                        .WithMany()
+                        .HasForeignKey("MealsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DiaryExercise", b =>
+                {
+                    b.HasOne("MyFitnessApp.Models.Diary", null)
+                        .WithMany()
+                        .HasForeignKey("DiariesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Breakfast");
+                    b.HasOne("MyFitnessApp.Models.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("ExercisesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Navigation("Meal");
+            modelBuilder.Entity("DinnerMeal", b =>
+                {
+                    b.HasOne("MyFitnessApp.Models.Dinner", null)
+                        .WithMany()
+                        .HasForeignKey("DinnersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyFitnessApp.Models.Meal", null)
+                        .WithMany()
+                        .HasForeignKey("MealsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LunchMeal", b =>
+                {
+                    b.HasOne("MyFitnessApp.Models.Lunch", null)
+                        .WithMany()
+                        .HasForeignKey("LunchesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyFitnessApp.Models.Meal", null)
+                        .WithMany()
+                        .HasForeignKey("MealsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.Diary", b =>
@@ -435,68 +458,11 @@ namespace MyFitnessApp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MyFitnessApp.Models.DiaryExercise", b =>
-                {
-                    b.HasOne("MyFitnessApp.Models.Diary", "Diary")
-                        .WithMany("DiaryExercises")
-                        .HasForeignKey("DiaryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyFitnessApp.Models.Exercise", "Exercise")
-                        .WithMany("DiaryExercises")
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Diary");
-
-                    b.Navigation("Exercise");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.DinnerMeal", b =>
-                {
-                    b.HasOne("MyFitnessApp.Models.Dinner", "Dinner")
-                        .WithMany("DinnerMeals")
-                        .HasForeignKey("DinnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyFitnessApp.Models.Meal", "Meal")
-                        .WithMany("DinnerMeals")
-                        .HasForeignKey("MealId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dinner");
-
-                    b.Navigation("Meal");
-                });
-
             modelBuilder.Entity("MyFitnessApp.Models.Ingredient", b =>
                 {
                     b.HasOne("MyFitnessApp.Models.Recipe", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.LunchMeal", b =>
-                {
-                    b.HasOne("MyFitnessApp.Models.Lunch", "Lunch")
-                        .WithMany("LunchMeals")
-                        .HasForeignKey("LunchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyFitnessApp.Models.Meal", "Meal")
-                        .WithMany("LunchMeals")
-                        .HasForeignKey("MealId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lunch");
-
-                    b.Navigation("Meal");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.User", b =>
@@ -524,40 +490,6 @@ namespace MyFitnessApp.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Breakfast", b =>
-                {
-                    b.Navigation("BreakfastMeals");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Diary", b =>
-                {
-                    b.Navigation("DiaryExercises");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Dinner", b =>
-                {
-                    b.Navigation("DinnerMeals");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Exercise", b =>
-                {
-                    b.Navigation("DiaryExercises");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Lunch", b =>
-                {
-                    b.Navigation("LunchMeals");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Meal", b =>
-                {
-                    b.Navigation("BreakfastMeals");
-
-                    b.Navigation("DinnerMeals");
-
-                    b.Navigation("LunchMeals");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.Recipe", b =>

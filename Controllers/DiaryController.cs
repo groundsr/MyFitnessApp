@@ -11,10 +11,12 @@ namespace MyFitnessApp.Controllers
     public class DiaryController : ControllerBase
     {
         public DiaryService _diaryService;
+        private MealService _mealService;
 
-        public DiaryController(DiaryService diaryService)
+        public DiaryController(DiaryService diaryService, MealService mealService)
         {
             _diaryService = diaryService;
+            _mealService = mealService;
         }
 
         [HttpGet]
@@ -29,6 +31,30 @@ namespace MyFitnessApp.Controllers
         public Diary GetDiaryForUser(int userid)
         {
             return _diaryService.GetDiaryForUser(userid);
+        }
+
+        [HttpPost]
+        [Route("addFoodToDiary")]
+        public IActionResult AddFoodToDiary(int userId, string MealType, int mealId, int quantity)
+        {
+            var meal = _mealService.Get(mealId);
+            try
+            {
+                if (meal is null)
+                {
+                    return BadRequest("Meal is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid object");
+                }
+                _diaryService.AddFoodToDiary(userId, MealType, mealId, quantity);
+                return Ok(meal);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.InnerException.Message);
+            }
         }
 
         [HttpGet]

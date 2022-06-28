@@ -25,13 +25,17 @@ import Searched from "./components/recipe/Searched";
 import SearchPage from "./pages/recipe/SearchPage";
 import RecipePage from "./pages/recipe/RecipePage";
 import Profile from "./pages/profile/Profile";
+import axios from "axios";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [name, setName] = useState("");
+  const [userId, setUserId] = useState();
   const [user, setUser] = useState({});
   const [userGoal, setUserGoal] = useState({});
   const [userPlan, setUserPlan] = useState({});
+  const [diaries, setDiaries] = useState([]);
+  const [todayDiary, setTodayDiary] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -42,20 +46,44 @@ function App() {
 
       const content = await response.json();
       // console.log(content);
+      setUserId(content.id);
       setUserPlan(content.userGoal.userPlan);
       setUserGoal(content.userGoal);
       setName(content.name);
       setUser(content);
     })();
-  },[name]);
+  }, [name]);
+
+  useEffect(() => {
+    axios.get("https://localhost:44325/diary/get").then((response) => {
+      console.log(response);
+      setDiaries(response.data);
+      setTodayDiary(
+        response.data ? response.data.at(-1) : console.log("loading")
+      );
+    });
+  }, []);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home name={name} setName={setName} user={user} setUser={setUser}/>} />
-            <Route path="login" element={<LoginPage name={name} setName={setName}/>} />
+            <Route
+              index
+              element={
+                <Home
+                  name={name}
+                  setName={setName}
+                  user={user}
+                  setUser={setUser}
+                />
+              }
+            />
+            <Route
+              path="login"
+              element={<LoginPage name={name} setName={setName} />}
+            />
             <Route path="account">
               <Route index element={<WelcomePage />} />
               <Route path="goals" element={<WeightGoalPage />} />
@@ -64,8 +92,11 @@ function App() {
               <Route path="register" element={<RegisterPage name={name} />} />
             </Route>
             <Route path="users">
-              <Route index element={<List name={name} setName={setName}/>} />
-              <Route path=":userId" element={<Single name={name} setName={setName}/>} />
+              <Route index element={<List name={name} setName={setName} />} />
+              <Route
+                path=":userId"
+                element={<Single name={name} setName={setName} />}
+              />
               <Route
                 path="new"
                 element={
@@ -91,21 +122,58 @@ function App() {
               <Route index element={<Dashboard name={name} setName={setName}/>} />
             </Route> */}
             <Route path="food">
-              <Route index element={<FoodPage name={name} setName={setName}/>} />
-              <Route path=":add" element={<AddFoodPage name={name} setName={setName}/>} />
+              <Route
+                index
+                element={<FoodPage name={name} setName={setName} />}
+              />
+              <Route
+                path=":add"
+                element={
+                  <AddFoodPage
+                    userId={userId}
+                    diaries={diaries}
+                    todayDiary={todayDiary}
+                    name={name}
+                    setName={setName}
+                  />
+                }
+              />
             </Route>
             <Route path="exercise">
-              <Route index element={<ExercisePage name={name} setName={setName}/>} />
-              <Route path=":add" element={<AddExercisePage name={name} setName={setName}/>} />
+              <Route
+                index
+                element={<ExercisePage name={name} setName={setName} />}
+              />
+              <Route
+                path=":add"
+                element={<AddExercisePage name={name} setName={setName} />}
+              />
             </Route>
             <Route path="recipes">
-              <Route index element={<RecipeHome name={name} setName={setName}/>} />
+              <Route
+                index
+                element={<RecipeHome name={name} setName={setName} />}
+              />
             </Route>
-            <Route path="/recipe/:id" element={<RecipePage name={name} setName={setName}/>} />
-            <Route path="profile" element={<Profile name={name} setName={setName} user={user} userGoal={userGoal} userPlan={userPlan}/>} />
+            <Route
+              path="/recipe/:id"
+              element={<RecipePage name={name} setName={setName} />}
+            />
+            <Route
+              path="profile"
+              element={
+                <Profile
+                  name={name}
+                  setName={setName}
+                  user={user}
+                  userGoal={userGoal}
+                  userPlan={userPlan}
+                />
+              }
+            />
             <Route
               path="searched/:search"
-              element={<SearchPage name={name} setName={setName}/>}
+              element={<SearchPage name={name} setName={setName} />}
             />
           </Route>
         </Routes>

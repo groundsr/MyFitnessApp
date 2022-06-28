@@ -28,7 +28,7 @@ namespace MyFitnessApp.BLL
         {
             var exerciseToUpdate = _exerciseRepository.Get(exercise.Id);
 
-            exerciseToUpdate.CaloriesBurnt = exercise.CaloriesBurnt;
+            //exerciseToUpdate.CaloriesBurnt = exercise.CaloriesBurnt;
             exerciseToUpdate.Name = exercise.Name;
             _exerciseRepository.Update(exerciseToUpdate);
         }

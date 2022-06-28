@@ -12,6 +12,7 @@ namespace MyFitnessApp.Models
         public virtual Dinner Dinner { get; set; }
 #nullable enable
         public virtual ICollection<Exercise>? Exercises { get; set; }
+        public virtual List<DiaryExercise> DiaryExercises { get; set; }
         public DateTime CreationDate { get; set; }
         public int TotalCalories { get; set; }
 

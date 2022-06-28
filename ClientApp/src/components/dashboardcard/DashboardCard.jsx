@@ -9,7 +9,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -55,7 +55,9 @@ const DashboardCard = (props) => {
 
   useEffect(() => {
     setUser(props.user);
-    setId(props.user.id);
+    setUserGoal(props.user.userGoal);
+    console.log(props.user.userGoal);
+    setUserPlan(props.userGoal ? props.userGoal.userPlan : console.log("loading"));
     setUserProgress(props.userProgress);
     setCurrentWeight(props.currentWeight);
   }, [props.user]);
@@ -76,6 +78,7 @@ const DashboardCard = (props) => {
               }}
             >
               <div className="title">Your daily summary</div>
+              <Button onClick={() => console.log(userPlan)}>asd</Button>
             </Box>
             <Paper
               sx={{
@@ -99,8 +102,8 @@ const DashboardCard = (props) => {
                   <div className="upperHalf">
                     <div className="Remaining">
                       Calories remaining:
-                      {/* <div className="Calories">{userPlan.totalCalories}</div> */}
-                      <div className="Calories">2710</div>
+                      <div className="Calories">{userPlan && userPlan.totalCalories}</div>
+                      <div className="Calories"></div>
                     </div>
                     <div className="buttons">
                       <Link to="/food/add" style={{ textDecoration: "none" }}>
@@ -126,7 +129,7 @@ const DashboardCard = (props) => {
                   <div className="lowerHalf">
                     <Grid container className="count" spacing={2}>
                       <Grid item className="countItem" xs={2}>
-                        2710
+                      {userPlan && userPlan.totalCalories}
                         <span className="span">Goal</span>
                       </Grid>
                       <span className="vl"></span>
@@ -172,7 +175,11 @@ const DashboardCard = (props) => {
                 <div className="bmi">
                   Current BMI : <span>{user.bmi}</span>
                   <span>
-                    {user.bmi > 25 || user.bmi <18 ? <ThumbDownAltIcon className="icon"/> : <ThumbUpAltIcon className="icon"/>}
+                    {user.bmi > 25 || user.bmi < 18 ? (
+                      <ThumbDownAltIcon className="icon" />
+                    ) : (
+                      <ThumbUpAltIcon className="icon" />
+                    )}
                     {/* <ThumbUpAltIcon className="icon" /> */}
                   </span>
                 </div>
