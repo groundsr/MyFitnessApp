@@ -11,6 +11,7 @@ const FoodPage = (props) => {
       <div className="foodContainer">
         <Navbar name={props.name} setName={props.setName} />
         <Food
+          userId = {props.userId}
           todayDiary={props.todayDiary}
           setTodayDiary={props.setTodayDiary}
         />

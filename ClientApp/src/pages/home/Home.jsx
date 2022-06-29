@@ -42,6 +42,7 @@ const Home = (props) => {
         <Navbar name={props.name} />
         <div className="card">
           <DashboardCard
+            todayDiary={props.todayDiary}
             user={user}
             setUser={setUser}
             userProgress={userProgress}

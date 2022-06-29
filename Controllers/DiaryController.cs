@@ -29,10 +29,9 @@ namespace MyFitnessApp.Controllers
 
         [HttpGet]
         [Route("get/{userid}")]
-        public async Task<IActionResult> GetDiaryForUser(int userid)
+        public Diary GetDiaryForUser(int userid)
         {
-            var diary = await _diaryService.GetDiaryForUser(userid);
-            return Ok(diary);
+            return _diaryService.GetDiaryForUser(userid);
         }
 
         [HttpPost]
@@ -64,6 +63,7 @@ namespace MyFitnessApp.Controllers
         public IActionResult RemoveFoodFromDiary(int userid, string MealType, int mealId)
         {
             var meal = _mealService.Get(mealId);
+            var diary = _diaryService.GetDiaryForUser(userid);
             try
             {
                 if (meal is null)
@@ -75,7 +75,7 @@ namespace MyFitnessApp.Controllers
                     return BadRequest("Invalid object");
                 }
                 _diaryService.DeleteFoodFromDiary(userid, MealType, mealId);
-                return Ok("Food has been deleted from today's diary");
+                return Ok(diary);
             }
             catch (Exception ex)
             {

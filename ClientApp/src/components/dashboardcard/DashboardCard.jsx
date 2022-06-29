@@ -26,6 +26,8 @@ const DashboardCard = (props) => {
   const [userGoal, setUserGoal] = useState({});
   const [userPlan, setUserPlan] = useState({});
   const [currentWeight, setCurrentWeight] = useState();
+  const [todayDiary, setTodayDiary] = useState({});
+  const [foodCalories, setFoodCalories] = useState();
   const url = "https://localhost:44325/users/get";
 
   const handleClickOpen = () => {
@@ -35,6 +37,21 @@ const DashboardCard = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getDiaries = async () => {
+    await axios.get("https://localhost:44325/diary/get").then((response) => {
+      console.log(response.data.at(-1));
+      setTodayDiary(response.data.at(-1));
+      setFoodCalories(
+        response.data.at(-1).breakfast.calories +
+          response.data.at(-1).lunch.calories +
+          response.data.at(-1).dinner.calories
+      );
+    });
+  };
+  function isWhatPercentOf(numA, numB) {
+    return (numA / numB) * 100;
+  }
 
   const updateBodyweight = async () => {
     await axios
@@ -55,12 +72,19 @@ const DashboardCard = (props) => {
 
   useEffect(() => {
     setUser(props.user);
+    setId(props.user.id);
     setUserGoal(props.user.userGoal);
     console.log(props.user.userGoal);
-    setUserPlan(props.userGoal ? props.userGoal.userPlan : console.log("loading"));
+    setUserPlan(
+      props.userGoal ? props.userGoal.userPlan : console.log("loading")
+    );
     setUserProgress(props.userProgress);
     setCurrentWeight(props.currentWeight);
   }, [props.user]);
+
+  useEffect(() => {
+    getDiaries();
+  }, []);
 
   return (
     <>
@@ -78,7 +102,7 @@ const DashboardCard = (props) => {
               }}
             >
               <div className="title">Your daily summary</div>
-              <Button onClick={() => console.log(userPlan)}>asd</Button>
+              <Button onClick={() => console.log(foodCalories)}>asd</Button>
             </Box>
             <Paper
               sx={{
@@ -102,7 +126,11 @@ const DashboardCard = (props) => {
                   <div className="upperHalf">
                     <div className="Remaining">
                       Calories remaining:
-                      <div className="Calories">{userPlan && userPlan.totalCalories}</div>
+                      <div className="Calories">
+                        {userPlan &&
+                          foodCalories &&
+                          userPlan.totalCalories - foodCalories}
+                      </div>
                       <div className="Calories"></div>
                     </div>
                     <div className="buttons">
@@ -129,12 +157,12 @@ const DashboardCard = (props) => {
                   <div className="lowerHalf">
                     <Grid container className="count" spacing={2}>
                       <Grid item className="countItem" xs={2}>
-                      {userPlan && userPlan.totalCalories}
+                        {userPlan && userPlan.totalCalories}
                         <span className="span">Goal</span>
                       </Grid>
                       <span className="vl"></span>
                       <Grid item xs={2}>
-                        0 <div>Food</div>
+                        {foodCalories} <div>Food</div>
                       </Grid>
                       <Grid item xs={1}>
                         -
@@ -146,13 +174,13 @@ const DashboardCard = (props) => {
                         =
                       </Grid>
                       <Grid item xs={2}>
-                        0 <div>Net</div>
+                        {foodCalories} <div>Net</div>
                       </Grid>
                     </Grid>
                   </div>
                 </Grid>
                 <Grid item xs>
-                  <Pie percentage={85} colour="blueviolet" />
+                  <Pie percentage={isWhatPercentOf(foodCalories,userPlan && userPlan.totalCalories)} colour="blueviolet" />
                 </Grid>
               </Grid>
             </Paper>

@@ -71,6 +71,7 @@ function App() {
               index
               element={
                 <Home
+                  todayDiary={todayDiary}
                   name={name}
                   setName={setName}
                   user={user}
@@ -122,7 +123,15 @@ function App() {
             <Route path="food">
               <Route
                 index
-                element={<FoodPage name={name} todayDiary={todayDiary} setTodayDiary={setTodayDiary} setName={setName} />}
+                element={
+                  <FoodPage
+                    name={name}
+                    todayDiary={todayDiary}
+                    userId={userId}
+                    setTodayDiary={setTodayDiary}
+                    setName={setName}
+                  />
+                }
               />
               <Route
                 path=":add"

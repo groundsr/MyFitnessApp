@@ -61,7 +61,7 @@ const Table = (props) => {
       )
       .then((response) => {
         console.log(response);
-        props.setTodayDiary(response.data);
+        // props.setTodayDiary(response.data);
         handleClose();
         navigate("/food/");
       })

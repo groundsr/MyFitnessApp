@@ -40,14 +40,15 @@ namespace MyFitnessApp.BLL
         {
             return _diaryRepository.GetAll();
         }
-        public async Task<Diary> GetDiaryForUser(int userId)
+        public Diary GetDiaryForUser(int userId)
         {
-            return  _diaryRepository.GetAll().Last(x => x.Id == userId);
+            //return  _diaryRepository.GetAll().Last(x => x.Id == userId);
+            return _diaryRepository.GetAll().FirstOrDefault(x => x.User.Id == userId && x.CreationDate.Day == DateTime.Today.Day);
         }
 
         public IEnumerable<Diary> GetAllDiariesForUser(int userId)
         {
-            return _diaryRepository.GetAll();
+            return _diaryRepository.GetAll().Where(x => x.User.Id == userId);
         }
 
         public void AddFoodToDiary(int userId, string MealType, int mealId, int quantity)
@@ -83,9 +84,12 @@ namespace MyFitnessApp.BLL
                     breakfastMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                     breakfastMeal.Quantity = quantity;
                     breakfastMeal.MealId = mealId;
-                    breakfastMeal.BreakfastId = breakfast.Id;
+                    breakfast.Calories += breakfastMeal.ActualCalories;
+                    _breakfastRepository.GetAll().Last().Calories += breakfastMeal.ActualCalories;
                     _breakfastMealRepository.Add(breakfastMeal);
                     _breakfastMealRepository.Save();
+                    _breakfastRepository.Save();
+                    _breakfastRepository.Save();
                 }
                 else if (MealType == "Lunch")
                 {
@@ -97,8 +101,10 @@ namespace MyFitnessApp.BLL
                     lunchMeal.Quantity = quantity;
                     lunchMeal.MealId = mealId;
                     lunchMeal.LunchId = lunch.Id;
+                    _lunchRepository.GetAll().Last().Calories += lunchMeal.ActualCalories;
                     _lunchMealRepository.Add(lunchMeal);
                     _lunchMealRepository.Save();
+                    _lunchRepository.Save();
                 }
                 else if (MealType == "Dinner")
                 {
@@ -110,8 +116,10 @@ namespace MyFitnessApp.BLL
                     dinnerMeal.Quantity = quantity;
                     dinnerMeal.MealId = mealId;
                     dinnerMeal.DinnerId = dinner.Id;
+                    _dinnerRepository.GetAll().Last().Calories += dinnerMeal.ActualCalories;
                     _dinnerMealRepository.Add(dinnerMeal);
                     _dinnerMealRepository.Save();
+                    _dinnerRepository.Save();
                 }
             }
             else
@@ -125,8 +133,10 @@ namespace MyFitnessApp.BLL
                 breakfastMeal.Quantity = quantity;
                 breakfastMeal.MealId = mealId;
                 breakfastMeal.BreakfastId = latestBreakfast.Id;
+                _breakfastRepository.GetAll().Last().Calories += breakfastMeal.ActualCalories;
                 _breakfastMealRepository.Add(breakfastMeal);
                 _breakfastMealRepository.Save();
+                _breakfastRepository.Save();
             }
             else if (MealType == "Lunch")
             {
@@ -138,8 +148,10 @@ namespace MyFitnessApp.BLL
                 lunchMeal.Quantity = quantity;
                 lunchMeal.MealId = mealId;
                 lunchMeal.LunchId = latestLunch.Id;
+                _lunchRepository.GetAll().Last().Calories += lunchMeal.ActualCalories;
                 _lunchMealRepository.Add(lunchMeal);
                 _lunchMealRepository.Save();
+                _lunchRepository.Save();
             }
             else if (MealType == "Dinner")
             {
@@ -151,8 +163,10 @@ namespace MyFitnessApp.BLL
                 dinnerMeal.Quantity = quantity;
                 dinnerMeal.MealId = mealId;
                 dinnerMeal.DinnerId = latestDinner.Id;
+                _dinnerRepository.GetAll().Last().Calories += dinnerMeal.ActualCalories;
                 _dinnerMealRepository.Add(dinnerMeal);
                 _dinnerMealRepository.Save();
+                _dinnerRepository.Save();
             }
         }
 

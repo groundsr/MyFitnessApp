@@ -22,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import SettingsSystemDaydreamOutlined from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,6 +50,8 @@ const Food = (props) => {
   const [todayDiary, setTodayDiary] = useState({});
   const [lunchMeals, setLunchMeals] = useState([]);
   const [breakfastMeals, setBreakfastMeals] = useState([]);
+  const [mealType, setMealType] = useState("");
+  const [mealId, setMealId] = useState();
   const [dinnerMeals, setDinnerMeals] = useState([]);
   const [open, setOpen] = React.useState(false);
   let breakfastMenu;
@@ -68,24 +71,35 @@ const Food = (props) => {
       setDiaries(response.data);
       console.log(response.data.at(-1));
       setTodayDiary(response.data.at(-1));
+      // props.setTodayDiary(response.data.at(-1));
       setBreakfastMeals(response.data.at(-1).breakfast.breakfastMeals);
       setLunchMeals(response.data.at(-1).lunch.lunchMeals);
       setDinnerMeals(response.data.at(-1).dinner.dinnerMeals);
     });
   };
 
+  const handleDelete = async () => {
+    await axios
+      .delete(
+        `https://localhost:44325/Diary/deleteFoodFromDiary?userid=${props.userId}&MealType=${mealType}&mealId=${mealId}`
+      )
+      .then((response) => {
+        console.log(response);
+        setLunchMeals(response.data.lunch.lunchMeals);
+        setBreakfastMeals(response.data.breakfast.breakfastMeals);
+        setDinnerMeals(response.data.dinner.dinnerMeals);
+        handleClose();
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert(error.response.data);
+        }
+      });
+  };
+
   useEffect(() => {
     getDiaries();
   }, []);
-
-  // useEffect(() => {
-  //   setTodayDiary(props.todayDiary);
-  //   setLunchMeals(props.todayDiary.lunch && props.todayDiary.lunch.lunchMeals);
-  //   setBreakfastMeals(
-  //     props.todayDiary.breakfast && props.todayDiary.breakfast.breakfastMeals
-  //   );
-  //   setDinnerMeals(props.todayDiary.dinner && props.todayDiary.dinner.dinnerMeals);
-  // }, [props.todayDiary, props.todayDiary.lunch, props.todayDiary.breakfast, props.todayDiary.dinner]);
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -116,7 +130,11 @@ const Food = (props) => {
             <StyledTableCell align="center">
               <DeleteIcon
                 sx={{ cursor: "pointer" }}
-                onClick={handleClickOpen}
+                onClick={() => {
+                  handleClickOpen();
+                  setMealType("Breakfast");
+                  setMealId(row.mealId);
+                }}
               />
               <Dialog
                 open={open}
@@ -130,7 +148,7 @@ const Food = (props) => {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Disagree</Button>
-                  <Button onClick={handleClose} autoFocus>
+                  <Button onClick={handleDelete} autoFocus>
                     Agree
                   </Button>
                 </DialogActions>
@@ -159,7 +177,31 @@ const Food = (props) => {
             <StyledTableCell align="right">{row.actualProtein}</StyledTableCell>
             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
             <StyledTableCell align="center">
-              <DeleteIcon sx={{ cursor: "pointer" }} />
+              <DeleteIcon
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleClickOpen();
+                  setMealType("Lunch");
+                  setMealId(row.mealId);
+                }}
+              />
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                BackdropProps={{ style: { backgroundColor: "transparent" } }}
+              >
+                <DialogContent>
+                  Are you sure you want to delete this entry?
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button onClick={handleDelete} autoFocus>
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </StyledTableCell>
           </StyledTableRow>
         ))}
@@ -184,7 +226,31 @@ const Food = (props) => {
             <StyledTableCell align="right">{row.actualProtein}</StyledTableCell>
             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
             <StyledTableCell align="center">
-              <DeleteIcon sx={{ cursor: "pointer" }} />
+              <DeleteIcon
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleClickOpen();
+                  setMealType("Dinner");
+                  setMealId(row.mealId);
+                }}
+              />
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                BackdropProps={{ style: { backgroundColor: "transparent" } }}
+              >
+                <DialogContent>
+                  Are you sure you want to delete this entry?
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button onClick={handleDelete} autoFocus>
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </StyledTableCell>
           </StyledTableRow>
         ))}
