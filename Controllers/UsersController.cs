@@ -119,6 +119,8 @@ namespace MyFitnessApp.Controllers
             }
         }
 
+        
+
         [HttpDelete]
         [Route("delete")]
         public IActionResult Delete(User user)

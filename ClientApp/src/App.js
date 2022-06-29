@@ -45,7 +45,6 @@ function App() {
       });
 
       const content = await response.json();
-      // console.log(content);
       setUserId(content.id);
       setUserPlan(content.userGoal.userPlan);
       setUserGoal(content.userGoal);
@@ -56,7 +55,6 @@ function App() {
 
   useEffect(() => {
     axios.get("https://localhost:44325/diary/get").then((response) => {
-      console.log(response);
       setDiaries(response.data);
       setTodayDiary(
         response.data ? response.data.at(-1) : console.log("loading")
@@ -124,7 +122,7 @@ function App() {
             <Route path="food">
               <Route
                 index
-                element={<FoodPage name={name} setName={setName} />}
+                element={<FoodPage name={name} todayDiary={todayDiary} setTodayDiary={setTodayDiary} setName={setName} />}
               />
               <Route
                 path=":add"
@@ -133,6 +131,7 @@ function App() {
                     userId={userId}
                     diaries={diaries}
                     todayDiary={todayDiary}
+                    setTodayDiary={setTodayDiary}
                     name={name}
                     setName={setName}
                   />

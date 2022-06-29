@@ -3,6 +3,7 @@ using MyFitnessApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyFitnessApp.BLL
 {
@@ -39,9 +40,9 @@ namespace MyFitnessApp.BLL
         {
             return _diaryRepository.GetAll();
         }
-        public Diary GetDiaryForUser(int userId)
+        public async Task<Diary> GetDiaryForUser(int userId)
         {
-            return _diaryRepository.GetAll().Last(x => x.Id == userId);
+            return  _diaryRepository.GetAll().Last(x => x.Id == userId);
         }
 
         public IEnumerable<Diary> GetAllDiariesForUser(int userId)
@@ -61,6 +62,7 @@ namespace MyFitnessApp.BLL
             var dinner = new Dinner();
             var newDiary = new Diary();
             newDiary.CreationDate = DateTime.Today;
+            var meal = _mealRepository.Get(mealId);
 
 
             if (diaries.Last().CreationDate.Day != DateTime.Today.Day)
@@ -75,6 +77,10 @@ namespace MyFitnessApp.BLL
                 if (MealType == "Breakfast")
                 {
                     var breakfastMeal = new BreakfastMeal();
+                    breakfastMeal.ActualCalories = (int)((double)quantity / 100 * meal.Calories);
+                    breakfastMeal.ActualProtein = (float)Math.Round((float)quantity / 100 * meal.Protein, 1);
+                    breakfastMeal.ActualCarbs = (float)Math.Round((float)quantity / 100 * meal.Carbohydrates, 1);
+                    breakfastMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                     breakfastMeal.Quantity = quantity;
                     breakfastMeal.MealId = mealId;
                     breakfastMeal.BreakfastId = breakfast.Id;
@@ -84,6 +90,10 @@ namespace MyFitnessApp.BLL
                 else if (MealType == "Lunch")
                 {
                     var lunchMeal = new LunchMeal();
+                    lunchMeal.ActualCalories = (int)((double)quantity / 100 * meal.Calories);
+                    lunchMeal.ActualProtein = (float)Math.Round((float)quantity / 100 * meal.Protein, 1);
+                    lunchMeal.ActualCarbs = (float)Math.Round((float)quantity / 100 * meal.Carbohydrates, 1);
+                    lunchMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                     lunchMeal.Quantity = quantity;
                     lunchMeal.MealId = mealId;
                     lunchMeal.LunchId = lunch.Id;
@@ -93,6 +103,10 @@ namespace MyFitnessApp.BLL
                 else if (MealType == "Dinner")
                 {
                     var dinnerMeal = new DinnerMeal();
+                    dinnerMeal.ActualCalories = (int)((double)quantity / 100 * meal.Calories);
+                    dinnerMeal.ActualProtein = (float)Math.Round((float)quantity / 100 * meal.Protein, 1);
+                    dinnerMeal.ActualCarbs = (float)Math.Round((float)quantity / 100 * meal.Carbohydrates, 1);
+                    dinnerMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                     dinnerMeal.Quantity = quantity;
                     dinnerMeal.MealId = mealId;
                     dinnerMeal.DinnerId = dinner.Id;
@@ -104,6 +118,10 @@ namespace MyFitnessApp.BLL
             if (MealType == "Breakfast")
             {
                 var breakfastMeal = new BreakfastMeal();
+                breakfastMeal.ActualCalories = (int)((double)quantity / 100 * meal.Calories);
+                breakfastMeal.ActualProtein = (float)Math.Round((float)quantity / 100 * meal.Protein, 1);
+                breakfastMeal.ActualCarbs = (float)Math.Round((float)quantity / 100 * meal.Carbohydrates, 1);
+                breakfastMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                 breakfastMeal.Quantity = quantity;
                 breakfastMeal.MealId = mealId;
                 breakfastMeal.BreakfastId = latestBreakfast.Id;
@@ -113,6 +131,10 @@ namespace MyFitnessApp.BLL
             else if (MealType == "Lunch")
             {
                 var lunchMeal = new LunchMeal();
+                lunchMeal.ActualCalories = (int)((double)quantity / 100 * meal.Calories);
+                lunchMeal.ActualProtein = (float)Math.Round((float)quantity / 100 * meal.Protein, 1);
+                lunchMeal.ActualCarbs = (float)Math.Round((float)quantity / 100 * meal.Carbohydrates, 1);
+                lunchMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                 lunchMeal.Quantity = quantity;
                 lunchMeal.MealId = mealId;
                 lunchMeal.LunchId = latestLunch.Id;
@@ -122,11 +144,42 @@ namespace MyFitnessApp.BLL
             else if (MealType == "Dinner")
             {
                 var dinnerMeal = new DinnerMeal();
+                dinnerMeal.ActualCalories = (int)((double)quantity / 100 * meal.Calories);
+                dinnerMeal.ActualProtein = (float)Math.Round((float)quantity / 100 * meal.Protein, 1);
+                dinnerMeal.ActualCarbs = (float)Math.Round((float)quantity / 100 * meal.Carbohydrates, 1);
+                dinnerMeal.ActualFat = (float)Math.Round((float)quantity / 100 * meal.Fat, 1);
                 dinnerMeal.Quantity = quantity;
                 dinnerMeal.MealId = mealId;
                 dinnerMeal.DinnerId = latestDinner.Id;
                 _dinnerMealRepository.Add(dinnerMeal);
                 _dinnerMealRepository.Save();
+            }
+        }
+
+        public void DeleteFoodFromDiary(int userId, string MealType, int mealId)
+        {
+            var lastDiary = GetAllDiariesForUser(userId).Last();
+            var meal = _mealRepository.Get(mealId);
+            if (MealType == "Breakfast")
+            {
+                var breakfastId = _breakfastMealRepository.GetAll().Last().BreakfastId;
+                var breakfastMeal = _breakfastMealRepository.GetComposite(breakfastId, mealId);
+                lastDiary.Breakfast.BreakfastMeals.Remove(breakfastMeal);
+                _diaryRepository.Save();
+            }
+            if (MealType == "Lunch")
+            {
+                var lunchId = _lunchMealRepository.GetAll().Last().LunchId;
+                var lunchMeal = _lunchMealRepository.GetComposite(lunchId, mealId);
+                lastDiary.Lunch.LunchMeals.Remove(lunchMeal);
+                _diaryRepository.Save();
+            }
+            if (MealType == "Dinner")
+            {
+                var dinnerId = _dinnerMealRepository.GetAll().Last().DinnerId;
+                var dinnerMeal = _dinnerMealRepository.GetComposite(dinnerId, mealId);
+                lastDiary.Dinner.DinnerMeals.Remove(dinnerMeal);
+                _diaryRepository.Save();
             }
         }
         public Diary Get(int id)

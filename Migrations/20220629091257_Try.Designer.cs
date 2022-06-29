@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitnessApp.Data;
 
 namespace MyFitnessApp.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    partial class FitnessContextModelSnapshot : ModelSnapshot
+    [Migration("20220629091257_Try")]
+    partial class Try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,12 +134,7 @@ namespace MyFitnessApp.Migrations
                     b.Property<int>("Calories")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MealId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MealId");
 
                     b.ToTable("Dinner");
                 });
@@ -151,19 +148,29 @@ namespace MyFitnessApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ActualCalories")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<float>("ActualCarbs")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<float>("ActualFat")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<float>("ActualProtein")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("DinnerId", "MealId");
 
@@ -217,12 +224,7 @@ namespace MyFitnessApp.Migrations
                     b.Property<int>("Calories")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MealId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MealId");
 
                     b.ToTable("Lunch");
                 });
@@ -236,19 +238,29 @@ namespace MyFitnessApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ActualCalories")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<float>("ActualCarbs")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<float>("ActualFat")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<float>("ActualProtein")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("LunchId", "MealId");
 
@@ -494,13 +506,6 @@ namespace MyFitnessApp.Migrations
                     b.Navigation("Exercise");
                 });
 
-            modelBuilder.Entity("MyFitnessApp.Models.Dinner", b =>
-                {
-                    b.HasOne("MyFitnessApp.Models.Meal", null)
-                        .WithMany("Dinners")
-                        .HasForeignKey("MealId");
-                });
-
             modelBuilder.Entity("MyFitnessApp.Models.DinnerMeal", b =>
                 {
                     b.HasOne("MyFitnessApp.Models.Dinner", "Dinner")
@@ -525,13 +530,6 @@ namespace MyFitnessApp.Migrations
                     b.HasOne("MyFitnessApp.Models.Recipe", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId");
-                });
-
-            modelBuilder.Entity("MyFitnessApp.Models.Lunch", b =>
-                {
-                    b.HasOne("MyFitnessApp.Models.Meal", null)
-                        .WithMany("Lunches")
-                        .HasForeignKey("MealId");
                 });
 
             modelBuilder.Entity("MyFitnessApp.Models.LunchMeal", b =>
@@ -610,10 +608,6 @@ namespace MyFitnessApp.Migrations
                     b.Navigation("BreakfastMeals");
 
                     b.Navigation("DinnerMeals");
-
-                    b.Navigation("Dinners");
-
-                    b.Navigation("Lunches");
 
                     b.Navigation("LunchMeals");
                 });

@@ -3,6 +3,7 @@ using MyFitnessApp.BLL;
 using MyFitnessApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyFitnessApp.Controllers
 {
@@ -28,9 +29,10 @@ namespace MyFitnessApp.Controllers
 
         [HttpGet]
         [Route("get/{userid}")]
-        public Diary GetDiaryForUser(int userid)
+        public async Task<IActionResult> GetDiaryForUser(int userid)
         {
-            return _diaryService.GetDiaryForUser(userid);
+            var diary = await _diaryService.GetDiaryForUser(userid);
+            return Ok(diary);
         }
 
         [HttpPost]
@@ -57,13 +59,37 @@ namespace MyFitnessApp.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("get/{id}")]
-        public Diary GetDiary(int id)
+        [HttpDelete]
+        [Route("deleteFoodFromDiary")]
+        public IActionResult RemoveFoodFromDiary(int userid, string MealType, int mealId)
         {
-            var diary = _diaryService.Get(id);
-            return diary;
+            var meal = _mealService.Get(mealId);
+            try
+            {
+                if (meal is null)
+                {
+                    return BadRequest("Meal is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid object");
+                }
+                _diaryService.DeleteFoodFromDiary(userid, MealType, mealId);
+                return Ok("Food has been deleted from today's diary");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.InnerException.Message);
+            }
         }
+
+        //[HttpGet]
+        //[Route("get/{id}")]
+        //public Diary GetDiary(int id)
+        //{
+        //    var diary = _diaryService.Get(id);
+        //    return diary;
+        //}
 
         [HttpPost]
         [Route("create")]

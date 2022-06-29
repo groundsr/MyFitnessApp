@@ -42,25 +42,26 @@ namespace MyFitnessApp.Data
             modelBuilder.Entity<Lunch>().ToTable("Lunch");
             modelBuilder.Entity<Dinner>().ToTable("Dinner");
             modelBuilder.Entity<UserProgress>().ToTable("UserProgress");
-            //modelBuilder.Entity<BreakfastMeal>().ToTable("BreakfastMeals");
-            //modelBuilder.Entity<DinnerMeal>().ToTable("DinnerMeals");
-            //modelBuilder.Entity<LunchMeal>().ToTable("LunchMeals");
-            //modelBuilder.Entity<DiaryExercise>().ToTable("DiaryExercises");
-
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();
             });
+            modelBuilder.Entity<BreakfastMeal>().HasKey(bm => new { bm.BreakfastId, bm.MealId });
+            modelBuilder.Entity<BreakfastMeal>().HasOne(bm => bm.Breakfast).WithMany(b => b.BreakfastMeals).HasForeignKey(bm => bm.BreakfastId);
+            modelBuilder.Entity<BreakfastMeal>().HasOne(bm => bm.Meal).WithMany(m => m.BreakfastMeals).HasForeignKey(bm => bm.MealId);
 
-            modelBuilder.Entity<Breakfast>().HasMany(b => b.Meals).WithMany(b => b.Breakfasts).UsingEntity<BreakfastMeal>(
-                j => j.HasOne(pt => pt.Meal).WithMany(t => t.BreakfastMeals).HasForeignKey(pt => pt.MealId),
-                j => j.HasOne(pt => pt.Breakfast).WithMany(p => p.BreakfastMeals).HasForeignKey(pt => pt.BreakfastId),
-                j =>
-                {
-                    j.Property(pt => pt.Quantity).HasDefaultValue(0);
-                    j.HasKey(t => new { t.BreakfastId, t.MealId });
-                });
+
+            modelBuilder.Entity<LunchMeal>().HasKey(bm => new { bm.LunchId, bm.MealId });
+            modelBuilder.Entity<LunchMeal>().HasOne(bm => bm.Lunch).WithMany(b => b.LunchMeals).HasForeignKey(bm => bm.LunchId);
+            modelBuilder.Entity<LunchMeal>().HasOne(bm => bm.Meal).WithMany(m => m.LunchMeals).HasForeignKey(bm => bm.MealId);
+
+
+            modelBuilder.Entity<DinnerMeal>().HasKey(bm => new { bm.DinnerId, bm.MealId });
+            modelBuilder.Entity<DinnerMeal>().HasOne(bm => bm.Dinner).WithMany(b => b.DinnerMeals).HasForeignKey(bm => bm.DinnerId);
+            modelBuilder.Entity<DinnerMeal>().HasOne(bm => bm.Meal).WithMany(m => m.DinnerMeals).HasForeignKey(bm => bm.MealId);
+
+            
 
             modelBuilder.Entity<Diary>().HasMany(d => d.Exercises).WithMany(d => d.Diaries).UsingEntity<DiaryExercise>(
                 j => j.
@@ -76,25 +77,6 @@ namespace MyFitnessApp.Data
                     j.Property(de => de.HowLong).HasDefaultValue(0);
                     j.HasKey(d => new { d.DiaryId, d.ExerciseId });
                 });
-
-            modelBuilder.Entity<Lunch>().HasMany(b => b.Meals).WithMany(b => b.Lunches).UsingEntity<LunchMeal>(
-                j => j.HasOne(pt => pt.Meal).WithMany(t => t.LunchMeals).HasForeignKey(pt => pt.MealId),
-                j => j.HasOne(pt => pt.Lunch).WithMany(p => p.LunchMeals).HasForeignKey(pt => pt.LunchId),
-                j =>
-                {
-                    j.Property(pt => pt.Quantity).HasDefaultValue(0);
-                    j.HasKey(t => new { t.LunchId, t.MealId });
-                });
-
-            modelBuilder.Entity<Dinner>().HasMany(b => b.Meals).WithMany(b => b.Dinners).UsingEntity<DinnerMeal>(
-                j => j.HasOne(pt => pt.Meal).WithMany(t => t.DinnerMeals).HasForeignKey(pt => pt.MealId),
-                j => j.HasOne(pt => pt.Dinner).WithMany(p => p.DinnerMeals).HasForeignKey(pt => pt.DinnerId),
-                j =>
-                {
-                    j.Property(pt => pt.Quantity).HasDefaultValue(0);
-                    j.HasKey(t => new { t.DinnerId, t.MealId });
-                });
-
 
         }
 

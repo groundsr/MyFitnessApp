@@ -68,6 +68,7 @@ const AddFood = (props) => {
         <Table
           data={search(searchedFood)}
           userId={props.userId}
+          setTodayDiary={props.setTodayDiary}
           todayDiary={todayDiary}
         />
       </div>

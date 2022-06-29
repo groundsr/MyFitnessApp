@@ -18,6 +18,10 @@ import { purple } from "@mui/material/colors";
 import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,60 +43,34 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Food = () => {
+const Food = (props) => {
   const [value, setValue] = useState(new Date());
   const [diaries, setDiaries] = useState([]);
   const [todayDiary, setTodayDiary] = useState({});
-  const [lunch, setLunch] = useState({});
   const [lunchMeals, setLunchMeals] = useState([]);
-  const [breakfast, setBreakfast] = useState({});
   const [breakfastMeals, setBreakfastMeals] = useState([]);
-  const [dinner, setDinner] = useState({});
   const [dinnerMeals, setDinnerMeals] = useState([]);
+  const [open, setOpen] = React.useState(false);
   let breakfastMenu;
   let dinnerMenu;
   let lunchMenu;
 
-  const createData = (name, calories, fat, carbs, protein) => {
-    return { name, calories, fat, carbs, protein };
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const getdiary = () => {
-    console.log(todayDiary);
-    console.log(lunch);
-    console.log(lunchMeals);
+  const handleClose = () => {
+    setOpen(false);
   };
-
-  function getFormattedDate(date) {
-    let year = date.getFullYear();
-    let month = (1 + date.getMonth()).toString().padStart(2, "0");
-    let day = date.getDate().toString().padStart(2, "0");
-
-    return month + "/" + day + "/" + year;
-  }
 
   const getDiaries = async () => {
     await axios.get("https://localhost:44325/diary/get").then((response) => {
       setDiaries(response.data);
-    });
-  };
-
-  const getTodayDiary = () => {
-    diaries.map((diary) => {
-      var creationDate = getFormattedDate(new Date(diary.creationDate));
-      var currentDate = getFormattedDate(new Date());
-      if (creationDate == currentDate) {
-        setTodayDiary(diary);
-        console.log("equal", diary);
-        setLunch(diary.lunch);
-        setLunchMeals(diary.lunch.meals);
-        setDinner(diary.dinner);
-        setDinnerMeals(diary.dinner.meals);
-        setBreakfast(diary.breakfast);
-        setBreakfastMeals(diary.breakfast.meals);
-      } else {
-        console.log("not equal");
-      }
+      console.log(response.data.at(-1));
+      setTodayDiary(response.data.at(-1));
+      setBreakfastMeals(response.data.at(-1).breakfast.breakfastMeals);
+      setLunchMeals(response.data.at(-1).lunch.lunchMeals);
+      setDinnerMeals(response.data.at(-1).dinner.dinnerMeals);
     });
   };
 
@@ -100,11 +78,14 @@ const Food = () => {
     getDiaries();
   }, []);
 
-  useEffect(() => {
-    getTodayDiary();
-  }, [diaries]);
-
-  const meals = ["Breakfast", "Lunch", "Dinner"];
+  // useEffect(() => {
+  //   setTodayDiary(props.todayDiary);
+  //   setLunchMeals(props.todayDiary.lunch && props.todayDiary.lunch.lunchMeals);
+  //   setBreakfastMeals(
+  //     props.todayDiary.breakfast && props.todayDiary.breakfast.breakfastMeals
+  //   );
+  //   setDinnerMeals(props.todayDiary.dinner && props.todayDiary.dinner.dinnerMeals);
+  // }, [props.todayDiary, props.todayDiary.lunch, props.todayDiary.breakfast, props.todayDiary.dinner]);
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -116,56 +97,97 @@ const Food = () => {
 
   breakfastMenu = (
     <>
-      {breakfastMeals.map((row) => (
-        <StyledTableRow
-          key={row.name}
-          sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-        >
-          <StyledTableCell component="th" scope="row">
-            {row.name}
-          </StyledTableCell>
-          <StyledTableCell align="right">{row.calories}</StyledTableCell>
-          <StyledTableCell align="right">{row.fat}</StyledTableCell>
-          <StyledTableCell align="right">{row.carbohydrates}</StyledTableCell>
-          <StyledTableCell align="right">{row.protein}</StyledTableCell>
-        </StyledTableRow>
-      ))}
+      {breakfastMeals &&
+        breakfastMeals.map((row) => (
+          <StyledTableRow
+            key={row.mealId}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <StyledTableCell component="th" scope="row">
+              {row.meal.name}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {row.actualCalories}
+            </StyledTableCell>
+            <StyledTableCell align="right">{row.actualFat}</StyledTableCell>
+            <StyledTableCell align="right">{row.actualCarbs}</StyledTableCell>
+            <StyledTableCell align="right">{row.actualProtein}</StyledTableCell>
+            <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+            <StyledTableCell align="center">
+              <DeleteIcon
+                sx={{ cursor: "pointer" }}
+                onClick={handleClickOpen}
+              />
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                BackdropProps={{ style: { backgroundColor: "transparent" } }}
+              >
+                <DialogContent>
+                  Are you sure you want to delete this entry?
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Disagree</Button>
+                  <Button onClick={handleClose} autoFocus>
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </StyledTableCell>
+          </StyledTableRow>
+        ))}
     </>
   );
   lunchMenu = (
     <>
-      {lunchMeals.map((row) => (
-        <StyledTableRow
-          key={row.name}
-          sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-        >
-          <StyledTableCell component="th" scope="row">
-            {row.name}
-          </StyledTableCell>
-          <StyledTableCell align="right">{row.calories}</StyledTableCell>
-          <StyledTableCell align="right">{row.fat}</StyledTableCell>
-          <StyledTableCell align="right">{row.carbohydrates}</StyledTableCell>
-          <StyledTableCell align="right">{row.protein}</StyledTableCell>
-        </StyledTableRow>
-      ))}
+      {lunchMeals &&
+        lunchMeals.map((row) => (
+          <StyledTableRow
+            key={row.mealId}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <StyledTableCell component="th" scope="row">
+              {row.meal.name}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {row.actualCalories}
+            </StyledTableCell>
+            <StyledTableCell align="right">{row.actualFat}</StyledTableCell>
+            <StyledTableCell align="right">{row.actualCarbs}</StyledTableCell>
+            <StyledTableCell align="right">{row.actualProtein}</StyledTableCell>
+            <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+            <StyledTableCell align="center">
+              <DeleteIcon sx={{ cursor: "pointer" }} />
+            </StyledTableCell>
+          </StyledTableRow>
+        ))}
     </>
   );
   dinnerMenu = (
     <>
-      {dinnerMeals.map((row) => (
-        <StyledTableRow
-          key={row.name}
-          sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-        >
-          <StyledTableCell component="th" scope="row">
-            {row.name}
-          </StyledTableCell>
-          <StyledTableCell align="right">{row.calories}</StyledTableCell>
-          <StyledTableCell align="right">{row.fat}</StyledTableCell>
-          <StyledTableCell align="right">{row.carbohydrates}</StyledTableCell>
-          <StyledTableCell align="right">{row.protein}</StyledTableCell>
-        </StyledTableRow>
-      ))}
+      {dinnerMeals &&
+        dinnerMeals.map((row) => (
+          <StyledTableRow
+            key={row.mealId}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <StyledTableCell component="th" scope="row">
+              {row.meal.name}
+            </StyledTableCell>
+            <StyledTableCell align="right">
+              {row.actualCalories}
+            </StyledTableCell>
+            <StyledTableCell align="right">{row.actualFat}</StyledTableCell>
+            <StyledTableCell align="right">{row.actualCarbs}</StyledTableCell>
+            <StyledTableCell align="right">{row.actualProtein}</StyledTableCell>
+            <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+            <StyledTableCell align="center">
+              <DeleteIcon sx={{ cursor: "pointer" }} />
+            </StyledTableCell>
+          </StyledTableRow>
+        ))}
     </>
   );
 
@@ -175,6 +197,7 @@ const Food = () => {
         <div className="foodTitle">
           <div style={{ display: "flex" }}>
             Your food Diary for :
+            <Button onClick={() => console.log(todayDiary)}>asd</Button>
             <div className="date">
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
@@ -221,6 +244,10 @@ const Food = () => {
                 <StyledTableCell align="right">
                   Protein&nbsp;(g)
                 </StyledTableCell>
+                <StyledTableCell align="right">
+                  Quantity&nbsp;(g)
+                </StyledTableCell>
+                <StyledTableCell align="center">Delete entry</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>{breakfastMenu}</TableBody>
@@ -238,15 +265,17 @@ const Food = () => {
           >
             <TableHead>
               <TableRow>
-                <StyledTableCell className="mealTitle">
-                  Lunch{" "}
-                </StyledTableCell>
+                <StyledTableCell className="mealTitle">Lunch </StyledTableCell>
                 <StyledTableCell align="right">Calories</StyledTableCell>
                 <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
                 <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
                 <StyledTableCell align="right">
                   Protein&nbsp;(g)
                 </StyledTableCell>
+                <StyledTableCell align="right">
+                  Quantity&nbsp;(g)
+                </StyledTableCell>
+                <StyledTableCell align="center">Delete entry</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>{lunchMenu}</TableBody>
@@ -264,15 +293,17 @@ const Food = () => {
           >
             <TableHead>
               <TableRow>
-                <StyledTableCell className="mealTitle">
-                  Dinner{" "}
-                </StyledTableCell>
+                <StyledTableCell className="mealTitle">Dinner </StyledTableCell>
                 <StyledTableCell align="right">Calories</StyledTableCell>
                 <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
                 <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
                 <StyledTableCell align="right">
                   Protein&nbsp;(g)
                 </StyledTableCell>
+                <StyledTableCell align="right">
+                  Quantity&nbsp;(g)
+                </StyledTableCell>
+                <StyledTableCell align="center">Delete entry</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>{dinnerMenu}</TableBody>

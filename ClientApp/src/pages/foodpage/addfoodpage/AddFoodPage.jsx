@@ -10,7 +10,7 @@ const AddFoodPage = (props) => {
       <Sidebar name={props.name} setName={props.setName} />
       <div className="foodContainer">
         <Navbar name={props.name} setName={props.setName} />
-        <AddFood diaries={props.diaries} userId={props.userId} todayDiary={props.todayDiary} />
+        <AddFood diaries={props.diaries} userId={props.userId} todayDiary={props.todayDiary} setTodayDiary={props.setTodayDiary}/>
       </div>
     </div>
   );

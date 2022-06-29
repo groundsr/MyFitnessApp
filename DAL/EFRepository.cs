@@ -36,6 +36,11 @@ namespace MyFitnessApp.DAL
             return dbSet.Find(id);
         }
 
+        public T GetComposite(int id1, int id2)
+        {
+            return dbSet.Find(id1, id2);
+        }
+
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query = dbSet;

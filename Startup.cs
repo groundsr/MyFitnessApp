@@ -30,6 +30,11 @@ namespace MyFitnessApp
             services.AddDbContext<FitnessContext>(options =>
             options.UseLazyLoadingProxies()
             .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //services.AddMvc().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.ReferenceHandler = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //});
 
             services.AddScoped<IUserRepository, EFUserRepository>();
             services.AddScoped<UserService>();
