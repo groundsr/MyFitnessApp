@@ -12,18 +12,20 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const theme = createTheme();
 
-const PersonalInfo = () => {
-  const [value, setValue] = React.useState(new Date("2014-08-18T21:11:54"));
+const PersonalInfo = (props) => {
+  const [value, setValue] = React.useState(new Date("2000-01-01:11:54"));
+  console.log(props);
 
   const handleChange = (newValue) => {
     setValue(newValue);
+    props.setBirthday(newValue);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
@@ -43,6 +45,7 @@ const PersonalInfo = () => {
           }}
         >
           <div className="personalText">Please select your sex</div>
+          <Button onClick={() => console.log(props.sex)}>asd</Button>
           <FormControl>
             <RadioGroup
               row
@@ -52,9 +55,15 @@ const PersonalInfo = () => {
               <FormControlLabel
                 value="female"
                 control={<Radio />}
+                onChange={() => props.setSex("F")}
                 label="Female"
               />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="male"
+                control={<Radio />}
+                label="Male"
+                onChange={() => props.setSex("M")}
+              />
             </RadioGroup>
           </FormControl>
           <div className="personalText">When were you born?</div>
@@ -69,20 +78,31 @@ const PersonalInfo = () => {
           </LocalizationProvider>
           <div className="personalText">How tall are you?</div>
           <TextField
-          id="outlined-required"
-          label="Height"
-        />
+            id="outlined-required"
+            onChange={(e) => props.setHeight(e.target.value)}
+            label="Height"
+          />
           <div className="personalText">How much do you weigh?</div>
           <TextField
-          id="outlined-required"
-          label="Current weight"
-        />
+            id="outlined-required"
+            onChange={(e) => props.setWeight(e.target.value)}
+            label="Current weight"
+          />
           <div className="personalText">What's your goal weight?</div>
           <TextField
-          id="outlined-required"
-          label="Goal weight"
-        />
-          <Stack spacing={2} direction="row" sx={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+            id="outlined-required"
+            onChange={(e) => props.setKilosGoal(e.target.value)}
+            label="Goal weight"
+          />
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Link
               to="/account/activity-level"
               style={{ textDecoration: "none" }}

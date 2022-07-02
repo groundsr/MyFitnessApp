@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitnessApp.Data;
 
 namespace MyFitnessApp.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    partial class FitnessContextModelSnapshot : ModelSnapshot
+    [Migration("20220702130329_addedusergoalid")]
+    partial class addedusergoalid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -361,7 +363,10 @@ namespace MyFitnessApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserGoalId")
+                    b.Property<string>("UserGoalId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserGoalId1")
                         .HasColumnType("int");
 
                     b.Property<double>("Weight")
@@ -372,7 +377,7 @@ namespace MyFitnessApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("UserGoalId");
+                    b.HasIndex("UserGoalId1");
 
                     b.ToTable("User");
                 });
@@ -396,12 +401,15 @@ namespace MyFitnessApp.Migrations
                     b.Property<int>("UserActivity")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserPlanId")
+                    b.Property<string>("UserPlanId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserPlanId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserPlanId");
+                    b.HasIndex("UserPlanId1");
 
                     b.ToTable("UserGoal");
                 });
@@ -584,9 +592,7 @@ namespace MyFitnessApp.Migrations
                 {
                     b.HasOne("MyFitnessApp.Models.UserGoal", "UserGoal")
                         .WithMany("Users")
-                        .HasForeignKey("UserGoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserGoalId1");
 
                     b.Navigation("UserGoal");
                 });
@@ -595,9 +601,7 @@ namespace MyFitnessApp.Migrations
                 {
                     b.HasOne("MyFitnessApp.Models.UserPlan", "UserPlan")
                         .WithMany("UserGoals")
-                        .HasForeignKey("UserPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserPlanId1");
 
                     b.Navigation("UserPlan");
                 });

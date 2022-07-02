@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,6 +14,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { useEffect } from "react";
+import { useStateWithCallback } from "./useStateWithCallback";
 
 function Copyright(props) {
   return (
@@ -35,31 +38,237 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [weightGoal, setWeightGoal] = useState();
+  const [userActivity, setUserActivity] = useState();
+  const [sex, setSex] = useState("");
+  const [birthday, setBirthday] = useState(new Date());
+  const [height, setHeight] = useState(1);
+  const [weight, setWeight] = useState(1);
+  const [kilosGoal, setKilosGoal] = useState(1);
+  const [age, setAge] = useState(1);
+  const [totalCalories, setTotalCalories] = useState();
+  const [protein, setProtein] = useState();
+  const [fat, setFat] = useState();
+  const [carbs, setCarbs] = useState();
+  const [bmi, setBmi] = useState();
+  const [basalMetabolicRate, setBasalMetabolicRate] = useState();
+  const [tdee, setTdee] = useState();
+  const [goalInt, setGoalInt] = useState();
+  const [activityInt, setActivityInt] = useState();
+  const [userPlan, setUserPlan] = useState({});
+  const [userPlanId, setUserPlanId] = useState(1);
+  const [userGoal, setUserGoal] = useState({});
+  const [userGoalId, setUserGoalId] = useState(1);
+  // let basalMetabolicRate;
+  // let tdee;
+
+  React.useEffect(() => {
+    setWeightGoal(props.weightGoal);
+    setUserActivity(props.userActivity);
+    setSex(props.sex);
+    setBirthday(props.birthday);
+    setHeight(props.height);
+    setWeight(props.weight);
+    setKilosGoal(props.kilosGoal);
+    setAge(getAge(props.birthday));
+  }, [
+    props.weightGoal,
+    props.userActivity,
+    props.sex,
+    props.birthday,
+    props.height,
+    props.weight,
+    props.kilosGoal,
+  ]);
+
+  useEffect(() => {
+    setBasalMetabolicRate(
+      66 + (13, 7 * weight) + 5 * height - 6.8 * getAge(birthday)
+    );
+
+    if (userActivity == "VeryActive") {
+      setTdee(basalMetabolicRate * 1.75);
+    } else if (userActivity == "Active") {
+      setTdee(basalMetabolicRate * 1.55);
+    } else if (userActivity == "LightlyActive") {
+      setTdee(basalMetabolicRate * 1.375);
+    } else if (userActivity == "Sedentary") {
+      setTdee(basalMetabolicRate * 1.2);
+    }
+
+    if (weightGoal == "Gain") {
+      setGoalInt(1);
+    } else if (weightGoal == "Cut") {
+      setGoalInt(2);
+    } else {
+      setGoalInt(0);
+    }
+
+    if (userActivity == "VeryActive") {
+      setActivityInt(0);
+    } else if (userActivity == "Active") {
+      setActivityInt(1);
+    } else if (userActivity == "LightlyActive") {
+      setActivityInt(2);
+    } else {
+      setActivityInt(3);
+    }
+  }, [
+    age,
+    weight,
+    height,
+    birthday,
+    basalMetabolicRate,
+    weightGoal,
+    userActivity,
+  ]);
+
+  useEffect(() => {
+    if (weightGoal == "Gain") {
+      if (sex == "M") {
+        setTotalCalories(tdee + 500);
+        setProtein(weight * 1.8);
+        setFat(weight * 0.8);
+        setCarbs((tdee + 500 - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
+      } else {
+        setTotalCalories(tdee + 250);
+        setProtein(weight * 1.8);
+        setFat(weight * 0.8);
+        setCarbs((tdee + 250 - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
+      }
+    }
+    if (weightGoal == "Cut") {
+      if (sex == "M") {
+        setTotalCalories(0.9 * tdee);
+        setProtein(weight * 1.8);
+        setFat(weight * 0.8);
+        setCarbs((tdee * 0.9 - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
+      } else {
+        setTotalCalories(0.75 * tdee);
+        setProtein(weight * 1.8);
+        setFat(weight * 0.8);
+        setCarbs((tdee * 0.75 - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
+      }
+    }
+    if (weightGoal == "Maintain") {
+      if (sex == "M") {
+        setTotalCalories(tdee + 200);
+        setProtein(weight * 1.8);
+        setFat(weight * 0.8);
+        setCarbs((tdee + 200 - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
+      } else {
+        setTotalCalories(tdee);
+        setProtein(weight * 1.8);
+        setFat(weight * 0.8);
+        setCarbs((tdee - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
+      }
+    }
+    if (carbs < 0) {
+      setTotalCalories(totalCalories + -carbs * 4 + 400);
+      setCarbs(100);
+    }
+    setBmi(parseInt((weight / ((height / 100) * (height / 100))).toFixed(1)));
+  }, [tdee, sex, weight, height]);
+
+  function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  useEffect(() => {
+    console.log("plan id",userPlanId);
+    if (userPlanId !== 1) {
+      console.log(userPlanId);
+      axios
+        .post("https://localhost:44325/UserGoals/create", {
+          Goal: goalInt,
+          GoalWeight: kilosGoal,
+          UserActivity: activityInt,
+          UserPlanId: userPlanId,
+        })
+
+        .then((response) => {
+          console.log(response.data);
+          setUserGoal(response.data);
+          setUserGoalId(response.data.id);
+        });
+    }
+  }, [userPlanId]);
+
+  useEffect(() => {
+    console.log("goal id",userGoalId);
+    if (userGoalId !== 1) {
+      axios.post("https://localhost:44325/api/register", {
+        Name: name,
+        Email: email,
+        Password: password,
+        Birthday: birthday,
+        Sex: sex,
+        Height: height,
+        Weight: weight,
+        UserGoalId: userGoalId,
+        Bmi: bmi,
+      });
+    }
+  }, [userGoalId, userPlanId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch("https://localhost:44325/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    });
-    setRedirect(true);
-    const content = await response.json();
-    console.log(content);
+    const resp = await axios
+      .post("https://localhost:44325/UserPlans/create", {
+        bmi: bmi,
+        totalCalories: parseInt(totalCalories),
+        totalCarbs: parseInt(carbs),
+        totalProtein: parseInt(protein),
+        totalFat: parseInt(fat),
+      })
+      .then((response) => {
+        console.log(response.data);
+        setUserPlan(response.data);
+        setUserPlanId(response.data.id);
+
+        console.log(userPlanId);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+
+    // await axios
+    //   .delete(`https://localhost:44325/UserPlans/delete?id=${userPlanId}`)
+    //   .then((res) => console.log(res));
+
+    // await axios
+    //   .post("https://localhost:44325/api/register", {
+    //     Name: name,
+    //     Email: email,
+    //     Password: password,
+    //     Sex: sex,
+    //     Height: height,
+    //     Weight: weight,
+    //     GoalWeight: kilosGoal,
+    //     Goal: 1,
+    //     UserActivity: 1,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
+    // setRedirect(true);
   };
 
-  if (redirect) {
-    return <Navigate to="/login" />;
-  }
+  // if (redirect) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -79,6 +288,15 @@ const SignUp = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          <Button onClick={() => console.log(bmi)}>asd</Button>
+          <Button onClick={() => console.log(fat)}>asd</Button>
+          <Button onClick={() => console.log(protein)}>asd</Button>
+          <Button onClick={() => console.log(totalCalories)}>asd</Button>
+          <Button onClick={() => console.log(carbs)}>asd</Button>
+          <Button onClick={() => console.log(tdee)}>asd</Button>
+          <Button onClick={() => console.log(basalMetabolicRate)}>asd</Button>
+          <Button onClick={handleSubmit}>submit</Button>
+
           <Box
             component="form"
             noValidate
@@ -120,7 +338,6 @@ const SignUp = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
-              
             </Grid>
             <Button
               type="submit"

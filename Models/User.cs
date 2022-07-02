@@ -30,6 +30,7 @@ namespace MyFitnessApp.Models
         }
         public virtual ICollection<UserProgress> UserProgresses { get; set; }
         public virtual UserGoal UserGoal { get; set; }
+        public int UserGoalId { get; set; }
         public virtual ICollection<Diary> Diaries { get; set; }
 
 

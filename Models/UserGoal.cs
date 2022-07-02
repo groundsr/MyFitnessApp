@@ -24,5 +24,6 @@ namespace MyFitnessApp.Models
         public float GoalPerWeek { get; set; }
         public UserActivity UserActivity { get; set; }
         public virtual UserPlan UserPlan { get; set; }
+        public int UserPlanId { get; set; }
     }
 }

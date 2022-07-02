@@ -10,11 +10,14 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { useState } from "react";
 
 const theme = createTheme();
 
-const WeightGoal = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+const WeightGoal = (props) => {
+  console.log(props);
+  const [selectedIndex, setSelectedIndex] = useState(1);
+  // const [weightGoal, setWeightGoal] = useState();
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -39,24 +42,39 @@ const WeightGoal = () => {
           }}
         >
           <div className="text">What is your weight goal?</div>
+        <Button onClick={() => console.log(props.weightGoal)}>aasd</Button>
+
           <List>
             <ListItem disablePadding>
               <ListItemButton
                 selected={selectedIndex === 0}
-                onClick={(event) => handleListItemClick(event, 0)}
+                onClick={(event) => {
+                  handleListItemClick(event, 0);
+                  props.setWeightGoal("Cut");
+                }}
               >
                 <ListItemText primary="Lose weight" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}>
+              <ListItemButton
+                selected={selectedIndex === 1}
+                onClick={(event) => {
+                  handleListItemClick(event, 1);
+                  props.setWeightGoal("Maintain");
+                }}
+              >
                 <ListItemText primary="Maintain weight" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}>
+              <ListItemButton
+                selected={selectedIndex === 2}
+                onClick={(event) => {
+                  handleListItemClick(event, 2);
+                  props.setWeightGoal("Gain");
+                }}
+              >
                 <ListItemText primary="Gain weight" />
               </ListItemButton>
             </ListItem>

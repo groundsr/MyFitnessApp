@@ -36,6 +36,13 @@ function App() {
   const [userPlan, setUserPlan] = useState({});
   const [diaries, setDiaries] = useState([]);
   const [todayDiary, setTodayDiary] = useState({});
+  const [weightGoal, setWeightGoal] = useState();
+  const [userActivity, setUserActivity] = useState();
+  const [sex, setSex] = useState();
+  const [birthday, setBirthday] = useState();
+  const [height, setHeight] = useState();
+  const [weight, setWeight] = useState();
+  const [kilosGoal, setKilosGoal] = useState();
 
   useEffect(() => {
     (async () => {
@@ -85,10 +92,43 @@ function App() {
             />
             <Route path="account">
               <Route index element={<WelcomePage />} />
-              <Route path="goals" element={<WeightGoalPage />} />
-              <Route path="activity-level" element={<ActivityLevelPage />} />
-              <Route path="personalinfo" element={<PersonalInfoPage />} />
-              <Route path="register" element={<RegisterPage name={name} />} />
+              <Route
+                path="goals"
+                element={<WeightGoalPage setWeightGoal={setWeightGoal} />}
+              />
+              <Route
+                path="activity-level"
+                element={
+                  <ActivityLevelPage setUserActivity={setUserActivity} />
+                }
+              />
+              <Route
+                path="personalinfo"
+                element={
+                  <PersonalInfoPage
+                    setSex={setSex}
+                    setBirthday={setBirthday}
+                    setHeight={setHeight}
+                    setKilosGoal={setKilosGoal}
+                    setWeight={setWeight}
+                  />
+                }
+              />
+              <Route
+                path="register"
+                element={
+                  <RegisterPage
+                    weightGoal={weightGoal}
+                    userActivity={userActivity}
+                    sex={sex}
+                    birthday={birthday}
+                    height={height}
+                    kilosGoal={kilosGoal}
+                    weight={weight}
+                    name={name}
+                  />
+                }
+              />
             </Route>
             <Route path="users">
               <Route index element={<List name={name} setName={setName} />} />

@@ -13,7 +13,8 @@ import ListItemText from "@mui/material/ListItemText";
 
 const theme = createTheme();
 
-const ActivityLevel = () => {
+const ActivityLevel = (props) => {
+  console.log(props);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleListItemClick = (event, index) => {
@@ -23,6 +24,7 @@ const ActivityLevel = () => {
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
         <CssBaseline />
+        <Button onClick={() => console.log(props.userActivity)}>aasd</Button>
         <Box
           sx={{
             marginTop: 12,
@@ -43,33 +45,57 @@ const ActivityLevel = () => {
             <ListItem disablePadding>
               <ListItemButton
                 selected={selectedIndex === 0}
-                onClick={(event) => handleListItemClick(event, 0)}
+                onClick={(event) => {
+                  handleListItemClick(event, 0);
+                  props.setUserActivity("Sedentary");
+                }}
               >
-                <ListItemText primary="Not Very Active" secondary="Spend most of the day sitting" />
+                <ListItemText
+                  primary="Not Very Active"
+                  secondary="Spend most of the day sitting"
+                />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton
                 selected={selectedIndex === 1}
-                onClick={(event) => handleListItemClick(event, 1)}
+                onClick={(event) => {
+                  handleListItemClick(event, 1);
+                  props.setUserActivity("LightlyActive");
+                }}
               >
-                <ListItemText primary="Lightly Active" secondary="Spend a good part of the day on your feet"/>
+                <ListItemText
+                  primary="Lightly Active"
+                  secondary="Spend a good part of the day on your feet"
+                />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton
                 selected={selectedIndex === 2}
-                onClick={(event) => handleListItemClick(event, 2)}
+                onClick={(event) => {
+                  handleListItemClick(event, 2);
+                  props.setUserActivity("Active");
+                }}
               >
-                <ListItemText primary="Active" secondary="Spend a good part of the day doing some physical activity"/>
+                <ListItemText
+                  primary="Active"
+                  secondary="Spend a good part of the day doing some physical activity"
+                />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton
                 selected={selectedIndex === 3}
-                onClick={(event) => handleListItemClick(event, 3)}
+                onClick={(event) => {
+                  handleListItemClick(event, 3);
+                  props.setUserActivity("VeryActive");
+                }}
               >
-                <ListItemText primary="Very Active" secondary="Spend a good part of the day doing heavy physical activity"/>
+                <ListItemText
+                  primary="Very Active"
+                  secondary="Spend a good part of the day doing heavy physical activity"
+                />
               </ListItemButton>
             </ListItem>
           </List>

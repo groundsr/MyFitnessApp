@@ -23,12 +23,18 @@ namespace MyFitnessApp.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterDto dto)
+        public IActionResult Register([FromBody]RegisterDto dto)
         {
             var user = new User
             {
                 Name = dto.Name,
                 Email = dto.Email,
+                //UserGoal = dto.UserGoal,
+                UserGoalId = dto.UserGoalId,
+                Sex = dto.Sex,
+                BirthDay = dto.Birthday,
+                Height = dto.Height,
+                Weight = dto.Weight,
                 //Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
                 Password = dto.Password,
             };

@@ -52,7 +52,7 @@ namespace MyFitnessApp.Controllers
                     return BadRequest("Invalid object");
                 }
                 _userPlanService.Create(userPlan);
-                return Ok("User plan has been created");
+                return Ok(userPlan);
             }
             catch (Exception ex)
             {
@@ -93,16 +93,16 @@ namespace MyFitnessApp.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public IActionResult Delete(UserPlan userPlan)
+        public IActionResult Delete(int id)
         {
             try
             {
-                var userToDelete = _userPlanService.Get(userPlan.Id);
+                var userToDelete = _userPlanService.Get(id);
                 if (userToDelete == null)
                 {
                     return NotFound();
                 }
-                _userPlanService.Delete(userPlan.Id);
+                _userPlanService.Delete(id);
                 return Ok("User plan has been deleted succesfully");
             }
             catch (Exception ex)

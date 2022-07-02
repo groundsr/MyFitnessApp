@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitnessApp.Data;
 
 namespace MyFitnessApp.Migrations
 {
     [DbContext(typeof(FitnessContext))]
-    partial class FitnessContextModelSnapshot : ModelSnapshot
+    [Migration("20220629181936_AddedTotalMacronutrients")]
+    partial class AddedTotalMacronutrients
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -361,7 +363,7 @@ namespace MyFitnessApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserGoalId")
+                    b.Property<int?>("UserGoalId")
                         .HasColumnType("int");
 
                     b.Property<double>("Weight")
@@ -396,7 +398,7 @@ namespace MyFitnessApp.Migrations
                     b.Property<int>("UserActivity")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserPlanId")
+                    b.Property<int?>("UserPlanId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -584,9 +586,7 @@ namespace MyFitnessApp.Migrations
                 {
                     b.HasOne("MyFitnessApp.Models.UserGoal", "UserGoal")
                         .WithMany("Users")
-                        .HasForeignKey("UserGoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserGoalId");
 
                     b.Navigation("UserGoal");
                 });
@@ -595,9 +595,7 @@ namespace MyFitnessApp.Migrations
                 {
                     b.HasOne("MyFitnessApp.Models.UserPlan", "UserPlan")
                         .WithMany("UserGoals")
-                        .HasForeignKey("UserPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserPlanId");
 
                     b.Navigation("UserPlan");
                 });

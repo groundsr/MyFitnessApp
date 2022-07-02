@@ -51,7 +51,7 @@ namespace MyFitnessApp.Controllers
                     return BadRequest("Invalid object");
                 }
                 _userGoalService.Create(userGoal);
-                return Ok("User goal has been created");
+                return Ok(userGoal);
             }
             catch (Exception ex)
             {
