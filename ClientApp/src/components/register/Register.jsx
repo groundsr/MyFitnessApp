@@ -64,8 +64,6 @@ const SignUp = (props) => {
   const [userPlanId, setUserPlanId] = useState(1);
   const [userGoal, setUserGoal] = useState({});
   const [userGoalId, setUserGoalId] = useState(1);
-  // let basalMetabolicRate;
-  // let tdee;
 
   React.useEffect(() => {
     setWeightGoal(props.weightGoal);
@@ -88,7 +86,7 @@ const SignUp = (props) => {
 
   useEffect(() => {
     setBasalMetabolicRate(
-      66 + (13, 7 * weight) + 5 * height - 6.8 * getAge(birthday)
+      66 + 13.7 * weight + 5 * height - 6.8 * getAge(birthday)
     );
 
     if (userActivity == "VeryActive") {
@@ -157,6 +155,7 @@ const SignUp = (props) => {
     }
     if (weightGoal == "Maintain") {
       if (sex == "M") {
+        console.log(tdee);
         setTotalCalories(tdee + 200);
         setProtein(weight * 1.8);
         setFat(weight * 0.8);
@@ -168,12 +167,14 @@ const SignUp = (props) => {
         setCarbs((tdee - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4);
       }
     }
-    if (carbs < 0) {
-      setTotalCalories(totalCalories + -carbs * 4 + 400);
+    if ((tdee - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4 < 0) {
+      setTotalCalories(
+        tdee + (-(tdee - (weight * 1.8 * 4 + weight * 0.8 * 9)) / 4) * 4 + 400
+      );
       setCarbs(100);
     }
     setBmi(parseInt((weight / ((height / 100) * (height / 100))).toFixed(1)));
-  }, [tdee, sex, weight, height]);
+  }, [tdee, userPlanId]);
 
   function getAge(dateString) {
     var today = new Date();
@@ -187,7 +188,7 @@ const SignUp = (props) => {
   }
 
   useEffect(() => {
-    console.log("plan id",userPlanId);
+    console.log("plan id", userPlanId);
     if (userPlanId !== 1) {
       console.log(userPlanId);
       axios
@@ -199,7 +200,6 @@ const SignUp = (props) => {
         })
 
         .then((response) => {
-          console.log(response.data);
           setUserGoal(response.data);
           setUserGoalId(response.data.id);
         });
@@ -207,21 +207,30 @@ const SignUp = (props) => {
   }, [userPlanId]);
 
   useEffect(() => {
-    console.log("goal id",userGoalId);
+    console.log("goal id", userGoalId);
     if (userGoalId !== 1) {
-      axios.post("https://localhost:44325/api/register", {
-        Name: name,
-        Email: email,
-        Password: password,
-        Birthday: birthday,
-        Sex: sex,
-        Height: height,
-        Weight: weight,
-        UserGoalId: userGoalId,
-        Bmi: bmi,
-      });
+      axios
+        .post("https://localhost:44325/api/register", {
+          Name: name,
+          Email: email,
+          Password: password,
+          Birthday: birthday,
+          Sex: sex,
+          Height: height,
+          Weight: weight,
+          UserGoalId: userGoalId,
+          Bmi: bmi,
+        })
+        .then((response) => {
+          if (response.status == 201) {
+            console.log("SUCCESS");
+            setRedirect(true);
+          } else {
+            alert("user could not be created");
+          }
+        });
     }
-  }, [userGoalId, userPlanId]);
+  }, [userGoalId, totalCalories]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -237,38 +246,15 @@ const SignUp = (props) => {
         console.log(response.data);
         setUserPlan(response.data);
         setUserPlanId(response.data.id);
-
-        console.log(userPlanId);
       })
       .catch((error) => {
         console.log(error.response.data);
       });
-
-    // await axios
-    //   .delete(`https://localhost:44325/UserPlans/delete?id=${userPlanId}`)
-    //   .then((res) => console.log(res));
-
-    // await axios
-    //   .post("https://localhost:44325/api/register", {
-    //     Name: name,
-    //     Email: email,
-    //     Password: password,
-    //     Sex: sex,
-    //     Height: height,
-    //     Weight: weight,
-    //     GoalWeight: kilosGoal,
-    //     Goal: 1,
-    //     UserActivity: 1,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   });
-    // setRedirect(true);
   };
 
-  // if (redirect) {
-  //   return <Navigate to="/login" />;
-  // }
+  if (redirect) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -288,13 +274,13 @@ const SignUp = (props) => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Button onClick={() => console.log(bmi)}>asd</Button>
-          <Button onClick={() => console.log(fat)}>asd</Button>
-          <Button onClick={() => console.log(protein)}>asd</Button>
-          <Button onClick={() => console.log(totalCalories)}>asd</Button>
-          <Button onClick={() => console.log(carbs)}>asd</Button>
-          <Button onClick={() => console.log(tdee)}>asd</Button>
-          <Button onClick={() => console.log(basalMetabolicRate)}>asd</Button>
+          <Button onClick={() => console.log(totalCalories)}>total</Button>
+          <Button onClick={() => console.log(weight)}>weight</Button>
+          <Button onClick={() => console.log(carbs)}>carbs</Button>
+          <Button onClick={() => console.log(height)}>height</Button>
+          <Button onClick={() => console.log(sex)}>sex</Button>
+          <Button onClick={() => console.log(tdee)}>tdee</Button>
+          <Button onClick={() => console.log(basalMetabolicRate)}>basal</Button>
           <Button onClick={handleSubmit}>submit</Button>
 
           <Box

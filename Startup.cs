@@ -54,6 +54,7 @@ namespace MyFitnessApp
             services.AddScoped<IExerciseRepository, EFExerciseRepository>();
             services.AddScoped<ExerciseService>();
             services.AddScoped<IUserProgressRepository, EfUserProgressRepository>();
+            services.AddScoped<UserProgressService>();
             services.AddScoped<IBreakfastRepository, EFBreakfastRepository>();
             services.AddScoped<ILunchRepository, EFLunchRepository>();
             services.AddScoped<IDinnerRepository, EFDinnerRepository>();

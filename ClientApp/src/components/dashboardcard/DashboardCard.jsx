@@ -17,6 +17,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect } from "react";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const DashboardCard = (props) => {
   const [open, setOpen] = useState(false);
@@ -29,7 +31,9 @@ const DashboardCard = (props) => {
   const [todayDiary, setTodayDiary] = useState({});
   const [foodCalories, setFoodCalories] = useState();
   const url = "https://localhost:44325/users/get";
-
+  const [alert, setAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState("");
+  let remainingCalories;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -39,15 +43,17 @@ const DashboardCard = (props) => {
   };
 
   const getDiaries = async () => {
-    await axios.get("https://localhost:44325/diary/get").then((response) => {
-      console.log(response.data.at(-1));
-      setTodayDiary(response.data.at(-1));
-      setFoodCalories(
-        response.data.at(-1).breakfast.calories +
-          response.data.at(-1).lunch.calories +
-          response.data.at(-1).dinner.calories
-      );
-    });
+    await axios
+      .get(`https://localhost:44325/diary/getdiariesforuser/${props.user.id}`)
+      .then((response) => {
+        console.log("today diary", response.data);
+        setTodayDiary(response.data.at(-1));
+        setFoodCalories(
+          response.data.at(-1).breakfast.calories +
+            response.data.at(-1).lunch.calories +
+            response.data.at(-1).dinner.calories
+        );
+      });
   };
   function isWhatPercentOf(numA, numB) {
     return (numA / numB) * 100;
@@ -66,6 +72,10 @@ const DashboardCard = (props) => {
         props.setCurrentWeight(
           response.data.userProgresses.at(-1).currentWeight
         );
+      })
+      .catch((error) => {
+        setAlert(true);
+        setAlertContent(error.response.data);
       });
     handleClose();
   };
@@ -74,7 +84,6 @@ const DashboardCard = (props) => {
     setUser(props.user);
     setId(props.user.id);
     setUserGoal(props.user.userGoal);
-    console.log(props.user.userGoal);
     setUserPlan(
       props.userGoal ? props.userGoal.userPlan : console.log("loading")
     );
@@ -84,10 +93,19 @@ const DashboardCard = (props) => {
 
   useEffect(() => {
     getDiaries();
-  }, []);
+  }, [user]);
+
+  
 
   return (
     <>
+      {alert ? (
+        <Alert onClose={() => setAlert(false)} severity="error">
+          {alertContent}
+        </Alert>
+      ) : (
+        <></>
+      )}
       <div className="dashboardContainer">
         <Grid container spacing={2}>
           <Grid item className="left" xs={9}>
@@ -102,7 +120,7 @@ const DashboardCard = (props) => {
               }}
             >
               <div className="title">Your daily summary</div>
-              <Button onClick={() => console.log(foodCalories)}>asd</Button>
+              <Button onClick={() => console.log(props.user.id)}>asd</Button>
             </Box>
             <Paper
               sx={{
@@ -162,7 +180,7 @@ const DashboardCard = (props) => {
                       </Grid>
                       <span className="vl"></span>
                       <Grid item xs={2}>
-                        {foodCalories} <div>Food</div>
+                        {foodCalories ? foodCalories : 0} <div>Food</div>
                       </Grid>
                       <Grid item xs={1}>
                         -
@@ -174,13 +192,19 @@ const DashboardCard = (props) => {
                         =
                       </Grid>
                       <Grid item xs={2}>
-                        {foodCalories} <div>Net</div>
+                        {foodCalories ? foodCalories : 0} <div>Net</div>
                       </Grid>
                     </Grid>
                   </div>
                 </Grid>
                 <Grid item xs>
-                  <Pie percentage={isWhatPercentOf(foodCalories,userPlan && userPlan.totalCalories)} colour="blueviolet" />
+                  <Pie
+                    percentage={isWhatPercentOf(
+                      foodCalories,
+                      userPlan && userPlan.totalCalories
+                    )}
+                    colour="blueviolet"
+                  />
                 </Grid>
               </Grid>
             </Paper>

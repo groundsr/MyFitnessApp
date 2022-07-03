@@ -194,7 +194,7 @@ const Profile = (props) => {
         </div>
         <div className="bottom">
           <h1 className="title">Nutrition (Last 7 days)</h1>
-          <List name={props.name} />
+          <List name={props.name} user={props.user}/>
         </div>
       </div>
     </div>

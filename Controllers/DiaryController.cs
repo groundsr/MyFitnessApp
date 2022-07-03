@@ -34,6 +34,13 @@ namespace MyFitnessApp.Controllers
             return _diaryService.GetDiaryForUser(userid);
         }
 
+        [HttpGet]
+        [Route("getdiariesforuser/{userid}")]
+        public IEnumerable<Diary> GetAllDiariesForUser(int userid)
+        {
+            return _diaryService.GetAllDiariesForUser(userid);
+        }
+
         [HttpPost]
         [Route("addFoodToDiary")]
         public IActionResult AddFoodToDiary(int userId, string MealType, int mealId, int quantity)

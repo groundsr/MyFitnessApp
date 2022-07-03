@@ -53,10 +53,16 @@ namespace MyFitnessApp.Controllers
                 {
                     return NotFound();
                 }
-
-                _userService.SetCurrentWeight(weight, id);
-                //return Ok("User has been updated succesfully");
-                return Ok(user);
+                if(user.UserProgresses.Count ==1)
+                {
+                    return BadRequest("You cannot update your weight in the first month");
+                }
+                else
+                {
+                    _userService.SetCurrentWeight(weight, id);
+                    return Ok(user);
+                }
+                
             }
             catch (Exception ex)
             {

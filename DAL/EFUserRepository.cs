@@ -31,7 +31,7 @@ namespace MyFitnessApp.DAL
             userProgress.WeightLogDate = System.DateTime.Today;
             foreach (var userPrg in _context.UserProgress)
             {
-                if (userPrg.WeightLogDate.Month == userProgress.WeightLogDate.Month)
+                if (userPrg.WeightLogDate.Month == userProgress.WeightLogDate.Month && userPrg.User.Id == userId)
                 {
                     userPrg.CurrentWeight = userProgress.CurrentWeight;
                     flag = true;

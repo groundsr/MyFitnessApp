@@ -11,12 +11,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Chip from "@mui/material/Chip";
 
-const List = () => {
+const List = (props) => {
   const [DiaryDetails, SetDiaryDetails] = useState([]);
 
   const fetchDetails = async () => {
     const data = axios
-      .get("https://localhost:44325/diary/get")
+      .get(
+        `https://localhost:44325/diary/getdiariesforuser/${props.user.id}`
+      )
       .then((response) => {
         SetDiaryDetails(response.data);
         console.log(response.data);
@@ -25,15 +27,23 @@ const List = () => {
 
   useEffect(() => {
     fetchDetails();
-  }, []);
+  }, [props.user]);
 
   const tableRows = DiaryDetails.map((diary) => ({
     id: diary.id,
     creationDate: diary.creationDate,
-    totalCalories: diary.breakfast.calories + diary.lunch.calories + diary.dinner.calories,
-    protein: diary.breakfast.totalProtein + diary.lunch.totalProtein + diary.dinner.totalProtein,
-    fat: diary.breakfast.totalFat + diary.lunch.totalFat + diary.dinner.totalFat,
-    carbs: diary.breakfast.totalCarbohydrates + diary.lunch.totalCarbohydrates + diary.dinner.totalCarbohydrates,
+    totalCalories:
+      diary.breakfast.calories + diary.lunch.calories + diary.dinner.calories,
+    protein:
+      diary.breakfast.totalProtein +
+      diary.lunch.totalProtein +
+      diary.dinner.totalProtein,
+    fat:
+      diary.breakfast.totalFat + diary.lunch.totalFat + diary.dinner.totalFat,
+    carbs:
+      diary.breakfast.totalCarbohydrates +
+      diary.lunch.totalCarbohydrates +
+      diary.dinner.totalCarbohydrates,
   }));
 
   return (

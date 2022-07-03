@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -38,14 +38,14 @@ const theme = createTheme();
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect,setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await fetch("https://localhost:44325/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify({
         email,
         password,
@@ -55,13 +55,14 @@ const Login = (props) => {
     setRedirect(true);
     const content = await response.json();
 
-    {props.setName(content.name)};
+    {
+      props.setName(content.name);
+    }
     console.log(content);
   };
 
-  if(redirect)
-  {
-    return <Navigate to ="/"/>
+  if (redirect) {
+    return <Navigate to="/" />;
   }
 
   return (
@@ -97,7 +98,7 @@ const Login = (props) => {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -108,7 +109,7 @@ const Login = (props) => {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -122,7 +123,7 @@ const Login = (props) => {
             >
               Sign In
             </Button>
-            <Grid container sx={{display: 'flex', justifyContent: 'end'}}>
+            <Grid container sx={{ display: "flex", justifyContent: "end" }}>
               {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
